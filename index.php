@@ -3,6 +3,7 @@ require('resources/functions/db.php');
 session_start();
 $wrong_password = false;
 $wrong_username = false;
+
 if (isset($_SESSION['login'])) {
 
    if ($_SESSION['type'] == 'anm') {
