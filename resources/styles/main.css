@@ -1,0 +1,108 @@
+.header {
+    background-color: #ffc0cb;
+    color: white;
+    padding: 10px
+}
+
+.header h1 {
+    color: black;
+    font-weight: 900
+}
+
+.header h6 {
+    color: black
+}
+
+.logo {
+    max-width: 200px
+}
+
+.title {
+    background-color: #ff69b4;
+    padding: 5px;
+    color: white
+}
+.stats {
+    padding: 20px;
+}
+.stat-box {
+  border-radius: 15px;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  color: white;
+    margin-bottom:20px
+}
+.red {
+    background-color: #ff6961
+}
+.green {
+    background-color: #62bc62
+}
+.table {
+    padding: 20px;
+    width: 100%
+}
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:#007fff;border-style:solid;border-color:white;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:#007fff;border-style:solid;border-color:white;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-baqh{background-color:#0d6efd;border-color:white;color:white;text-align:center;vertical-align:top}
+.tg .tg-r5ps{background-color:#808080;border-color:white;color:white;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-0fb1{background-color:#ff6961;border-color:white;color:white;text-align:center;vertical-align:top}
+.tg .tg-o6jj{background-color:#62bc62;border-color:white;color:white;text-align:center;vertical-align:top}
+
+select, input {
+    margin-bottom: 10px
+}
+
+.login-area {
+    background-image: url(../images/common/background.png); 
+    background-size: cover;
+}
+
+.login-form {
+    width: 340px;
+    margin: 10px auto;
+  	font-size: 15px;
+}
+.login-form form {
+    margin-bottom: 10px;
+    background: #f7f7f7;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+.login-form h2 {
+    margin: 0 0 15px;
+}
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+.btn {        
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom:20px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: #ff69b4;
+    color: white;
+    padding: 5px
+}
+.footer a {
+    color: white;
+    text-decoration: none
+}
+.footer a:hover {
+    color: white
+}
