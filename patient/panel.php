@@ -1,5 +1,5 @@
 <?php
-   include '../resources/core/db.php';
+   include '../resources/core/config.php';
    session_start();
    $patient_data = $_SESSION["patient_data"];
    $name = $patient_data["name"];

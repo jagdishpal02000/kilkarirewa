@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 if (isset($_REQUEST['village'])) {
     $village = strtolower($_REQUEST['village']);
-    require('db.php');
+    require('config.php');
     //find aasha allocated for that village.
     $res =  array();
     $res['status'] = 400;

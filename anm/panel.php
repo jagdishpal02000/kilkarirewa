@@ -4,9 +4,10 @@ $successful = false;
 $failed = false;
 require('../resources/functions/helpers.php');
 $anm_name = $_SESSION['anm_data']['name'];
+$SHC = $_SESSION['anm_data']['SHC'];
 $block_name = $_SESSION['anm_data']['block'];
 $city_name = $_SESSION['anm_data']['city'];
-$village_list = getVillages($block_name);
+$village_list = getVillages($SHC);
 if (isset($_POST['add_patient'])) {
    $name = $_POST['name'];
    $husband_name = $_POST['husband_name'];
@@ -15,6 +16,7 @@ if (isset($_POST['add_patient'])) {
    $address = $_POST['address'];
    $village = $_POST['village'];
    $block = $block_name;
+   $SHC = $SHC;
    $city = $city_name;
    $aasha = $_POST['aasha'];
    $lmp = $_POST['lmp'];
@@ -44,6 +46,7 @@ if (isset($_POST['add_patient'])) {
       $address,
       $village,
       $block,
+      $SHC,
       $city,
       $aasha,
       $lmp,
@@ -66,8 +69,11 @@ if (isset($_POST['add_patient'])) {
    ))
       $successful = true;
    else $failed = true;
+   if ($successful) {
+      sendSMSOnRegistration($aadhar);
+   }
 }
-$all_patients_data = getAllPatients($block_name);
+$all_patients_data = getAllPatients($SHC);
 ?>
 <?php
 include '../resources/sections/head.php';
@@ -161,13 +167,17 @@ include '../resources/sections/anm_menu.php';
                      </div>
                      <div class="mb-3">
                         <label for="village" id="village-label" class="form-label">Village Name</label>
-                        <select class="form-control" name="village" id="village" required>
+                        <select class="form-control form-select" name="village" id="village" required>
                            <option value="-1" selected disabled>Choose village</option>
                            <?php for ($i = 0; $i < count($village_list); $i++) {
                               echo "<option value=\"$village_list[$i]\">$village_list[$i]</option>";
                            }
                            ?>
                         </select>
+                     </div>
+                     <div class="mb-3">
+                        <label for="SCH" id="block-label" class="form-label">SHC Name</label>
+                        <input type="text" disabled value="<?= $SHC ?>" class="form-control" name="SHC" id="SHC" required>
                      </div>
                      <div class="mb-3">
                         <label for="block" id="block-label" class="form-label">Block Name</label>
@@ -282,5 +292,3 @@ include '../resources/sections/anm_menu.php';
 <?php
 include '../resources/sections/footer.php';
 ?>
-
-

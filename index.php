@@ -1,5 +1,5 @@
 <?php
-require('resources/functions/db.php');
+require('resources/functions/config.php');
 session_start();
 $wrong_password = false;
 $wrong_username = false;
