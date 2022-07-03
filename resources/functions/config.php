@@ -16,3 +16,5 @@ $authKey = "YourAuthKey";
 $senderId = "102234";
 $route = "default";
 $url="http://sms.velvish.com/api/sendhttp.php";
+
+$apiUrl="http://localhost/kilkarirewa/resources/functions/api.php";

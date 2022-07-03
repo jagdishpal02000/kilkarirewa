@@ -85,6 +85,18 @@ include '../resources/sections/head.php';
 <meta name="twitter:description" content="View your scheduled check up details.">
 <meta property="og:url" content="https://kilkarirewa.in/patient">
 <link rel="canonical" href="https://kilkarirewa.in/patient/">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<style>
+   table td:nth-child(2)  {
+  position: sticky;
+  left: 0;
+  background-color: white;
+}
+.checkbox{
+   cursor:pointer;
+}
+
+</style>
 <?php
 include '../resources/sections/header.php';
 ?>
@@ -107,21 +119,31 @@ include '../resources/sections/anm_menu.php';
          echo '<div class="alert alert-danger" role="alert"><h6 class="text-danger text-center">Patient जोड़ने में असमर्थ</h6></div>';
       ?>
       <h3 class="text-center"><?= $block_name ?> Patients List</h3>
-      <hr>
-      <table class="table table-hover container">
+      <div class="table-responsive tscroll" >
+      <table id="view_patient_table" class="table table-hover border" style="overflow: auto;">
          <thead>
             <tr>
                <th scope="col">S.No.</th>
-               <th scope="col">Patient Name</th>
+               <th class="freeze"style="background-color:white;position:sticky;left:0;z-index:2;" scope="col">Patient Name</th>
                <th scope="col">Mobile</th>
                <th scope="col">Aasha</th>
                <th scope="col">LMP</th>
+               <th scope="col">CheckUp 1</th>
+               <th scope="col">CheckUp 2</th>
+               <th scope="col">CheckUp 3</th>
+               <th scope="col">Delivery</th>
+               <th scope="col">Edit</th>
             </tr>
          </thead>
          <tbody>
             <?php
             $i = 1;
             foreach ($all_patients_data as $patient) {
+               $ac1_checked =  $patient['ac1'] == 1 ? 'checked' : '';
+               $ac2_checked =  $patient['ac2'] == 1 ? 'checked' : '';
+               $ac3_checked =  $patient['ac3'] == 1 ? 'checked' : '';
+               $delivery_checked =  $patient['delivery'] == 1 ? 'checked' : '';
+
 
                echo "
                <tr>
@@ -130,15 +152,24 @@ include '../resources/sections/anm_menu.php';
                <td>" . $patient['mobile'] . "</td>
                <td>" . $patient['aasha'] . "</td>
                <td>" . $patient['lmp'] . "</td>
-               </tr>
-               ";
+               <td><input type='checkbox' class='checkup' name='ac1_".$i."' value='1' $ac1_checked data-id=".$patient['id']." data-field='ac1'/></td>
+               <td><input type='checkbox' class='checkup' name='ac2_".$i."' value='1' $ac2_checked data-id=".$patient['id']." data-field='ac2' /></td>
+               <td><input type='checkbox' class='checkup' name='ac3_".$i."' value='1' $ac3_checked data-id=".$patient['id']." data-field='ac3' /></td>
+               <td><input type='checkbox' class='checkup' name='delivery".$i."' value='1' $delivery_checked data-id=".$patient['id']." value='1' data-field='delivery' /></td>
+               <td><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 24 24'>
+               <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
+               <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>
+             </svg></td>
+               </tr>";
                $i++;
             } ?>
-         </tbody>
+      </tbody>
       </table>
+      </div>
+      <!-- Model for Add Patients -->
       <div class="modal fade" id="addPatient" tabindex="-1" aria-labelledby="addPatientLabel" aria-hidden="true">
          <div class="modal-dialog">
-            <form method="POST" action="">
+            <form method="POST" action="#" >
                <div class="modal-content">
                   <div class="modal-header">
                      <h5 class="modal-title" id="addPatientLabel">Add Patient Data</h5>
@@ -272,14 +303,27 @@ include '../resources/sections/anm_menu.php';
             </form>
          </div>
       </div>
+      <!--start  Model for Update Patient -->
+      
+      <!-- end Model for Update Patient -->
+      
+
    </div>
    </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
 <script>
+   $(document).ready( function () {
+      $.noConflict();
+    $('#view_patient_table').dataTable();
+   });
+   
+   const apiUrl="<?=$apiUrl?>";
    $('#village').on('change', async () => {
       const village = $('#village').find(":selected").text();
-      const resp = await fetch(`https://kilkarirewa.in/resources/functions/api.php?village=${village}`);
+      const resp = await fetch(`${apiUrl}?village=${village}`);
       const resp_json = await resp.json();
       console.log(resp_json);
       if (resp_json.status === 200) {
@@ -288,6 +332,27 @@ include '../resources/sections/anm_menu.php';
          $('#aasha').val('');
       }
    });
+
+   $( "body" ).on( "click", ".checkup", function() {
+      const id = $(this).attr('data-id'); 
+      const field = $(this).attr('data-field');
+      const value=$(this).is(":checked") ? 1 :0;
+      console.log(id,field,value);
+      const formData ={id,field,value};
+      $.ajax({ 
+         url:apiUrl,
+         type: "POST",
+         data:formData,
+         success : function(res){
+            console.log(res);
+         }
+      });
+   });
+
+   // for preventing relsubmissions of from
+   if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
 </script>
 <?php
 include '../resources/sections/footer.php';
