@@ -92,7 +92,7 @@ include '../resources/sections/head.php';
   left: 0;
   background-color: white;
 }
-.checkbox{
+.checkbox,.edit-btn {
    cursor:pointer;
 }
 
@@ -155,8 +155,8 @@ include '../resources/sections/anm_menu.php';
                <td><input type='checkbox' class='checkup' name='ac1_".$i."' value='1' $ac1_checked data-id=".$patient['id']." data-field='ac1'/></td>
                <td><input type='checkbox' class='checkup' name='ac2_".$i."' value='1' $ac2_checked data-id=".$patient['id']." data-field='ac2' /></td>
                <td><input type='checkbox' class='checkup' name='ac3_".$i."' value='1' $ac3_checked data-id=".$patient['id']." data-field='ac3' /></td>
-               <td><input type='checkbox' class='checkup' name='delivery".$i."' value='1' $delivery_checked data-id=".$patient['id']." value='1' data-field='delivery' /></td>
-               <td><svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 24 24'>
+               <td><input type='checkbox' class='checkup' name='delivery".$i."' value='1' $delivery_checked data-id=".$patient['id']." value='1'  data-field='delivery' /></td>
+               <td><svg  xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' class='bi bi-pencil-square edit-btn' data-id='".$patient['id']."' viewBox='0 0 24 24' data-bs-toggle='modal' data-bs-target='#editPatient' aria-current='page'>
                <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
                <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>
              </svg></td>
@@ -303,13 +303,149 @@ include '../resources/sections/anm_menu.php';
             </form>
          </div>
       </div>
-      <!--start  Model for Update Patient -->
-      
-      <!-- end Model for Update Patient -->
-      
+   </div>
+
+   <!--start  Model for edit Patient -->
+   <div class="modal fade" id="editPatient" tabindex="-1" aria-labelledby="editPatientLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <form method="POST" action="#" >
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="editPatientLabel">Edit Patient Data</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                     <div class="mb-3">
+                        <label for="name" id="name-label" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="e-name" id="e-name" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="husband_name" id="husband_name-label" class="form-label">Husband Name</label>
+                        <input type="text" class="form-control" name="e-husband_name" id="e-husband_name" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number</label>
+                        <input type="number" class="form-control" name="e-aadhar" id="e-aadhar" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="mobile" id="mobile-label" class="form-label">Mobile Number</label>
+                        <input type="number" class="form-control" name="e-mobile" id="e-mobile" required>
+                     </div>
+                     <div class=" mb-3">
+                        <label for="address" id="address-label" class="form-label">Address</label>
+                        <input type="text" class="form-control" name="e-address" id="e-address" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="village" id="village-label" class="form-label">Village Name</label>
+                        <select class="form-control form-select" name="e-village" id="e-village" required>
+                           <option value="-1" selected disabled>Choose village</option>
+                           <?php for ($i = 0; $i < count($village_list); $i++) {
+                              echo "<option value=\"$village_list[$i]\">$village_list[$i]</option>";
+                           }
+                           ?>
+                        </select>
+                     </div>
+                     <div class="mb-3">
+                        <label for="SCH" id="block-label" class="form-label">SHC Name</label>
+                        <input type="text" disabled value="<?= $SHC ?>" class="form-control" name="e-SHC" id="e-SHC" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="block" id="block-label" class="form-label">Block Name</label>
+                        <input type="text" disabled value="<?= $block_name ?>" class="form-control" name="e-block" id="e-block" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="city" id="city-label" class="form-label">City</label>
+                        <input type="text" disabled value="<?= $city_name; ?>" class="form-control" name="e-city" id="e-city" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="aasha" id="aasha-label" class="form-label">Aasha</label>
+                        <input type="text" readonly class="form-control" name="e-aasha" id="e-aasha">
+                     </div>
+                     <div class="mb-3">
+                        <label for="lmp" id="lmp-label" class="form-label">LMP</label>
+                        <input type="date" class="form-control" id="e-lmp" name="e-lmp" required>
+                     </div>
+                     <div class="mb-3">
+                        <label for="reasons" class="form-label">Complication in Previous Pregnancy</label><br>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-APH" id="e-aph">
+                        <label class="form-check-label" for="e-aph">
+                           a) APH
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-eclampsia" id="e-Eclampsia">
+                        <label class="form-check-label" for="e-Eclampsia">
+                           b) Eclampsia
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-PIH" id="e-PIH">
+                        <label class="form-check-label" for="e-PIH">
+                           c) PIH
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-anaemia" id="e-Anaemia">
+                        <label class="form-check-label" for="e-Anaemia">
+                           d) Anaemia
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-obstructed_labor" id="e-Obstructed_Labor">
+                        <label class="form-check-label" for="e-Obstructed_Labor">
+                           e) Obstructed Labor
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-PPH" id="e-PPH">
+                        <label class="form-check-label" for="e-PPH">
+                           f) PPH
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-LSCS" id="e-LSCS">
+                        <label class="form-check-label" for="e-LSCS">
+                           g) LSCS
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-congenital_anamaly" id="e-Congenital_Anamaly">
+                        <label class="form-check-label" for="e-Congenital_Anamaly">
+                           h) Congenital Anamaly
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-abortion" id="e-Abortion">
+                        <label class="form-check-label" for="e-Abortion">
+                           i) Abortion
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-others_1" id="e-Others">
+                        <label class="form-check-label" for="e-Others">
+                           j) Others
+                        </label>
+                        <br>
+                        <label class="form-label">Past History</label><br>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-tuberculosis" id="e-Tuberculosis">
+                        <label class="form-check-label" for="e-Tuberculosis">
+                           a) Tuberculosis
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-hypertension" id="e-Hypertension">
+                        <label class="form-check-label" for="e-Hypertension">
+                           b) Hypertension
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-heart_disease" id="e-Heart_Disease">
+                        <label class="form-check-label" for="e-Heart_Disease">
+                           c) Heart Disease
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-diabetes" id="e-Diabetes">
+                        <label class="form-check-label" for="e-Diabetes">
+                           d) Diabetes
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-asthma" id="e-Asthma">
+                        <label class="form-check-label" for="e-Asthma">
+                           e) Asthma
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="1" name="e-other_2" id="e-Other">
+                        <label class="form-check-label" for="e-Other">
+                           f) Other
+                        </label>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <button type="submit" name="edit_patient" class=" btn btn-primary">Edit Patient</button>
+                  </div>
+            </form>
+         </div>
+      </div>
+   <!-- end Model for edit Patient -->
 
    </div>
-   </div>
+   
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
@@ -332,7 +468,31 @@ include '../resources/sections/anm_menu.php';
          $('#aasha').val('');
       }
    });
+   
+   $( "body" ).on( "click", ".edit-btn", function() {
+      let id=$(this).attr('data-id');
+      
+      $.ajax({ 
+         url:apiUrl+`?id=${id}`,
+         type: "GET",
+         success : function(res){
+            const data=JSON.parse(res).data;
+            $('#e-name').val(data.name);
+            $('#e-husband_name').val(data.husband_name);
+            $('#e-aadhar').val(data.aadhar);
+            $('#e-mobile').val(data.mobile);
+            $('#e-address').val(data.address);
+            $('#e-village').val(data.village);
+            $('#e-lmp').val(data.lmp);
+            
+            data.APH == 1 ? $('#e-APH').prop('checked', true):  $('#e-APH').prop('checked', false);
 
+
+
+         }
+      });
+
+   });
    $( "body" ).on( "click", ".checkup", function() {
       const id = $(this).attr('data-id'); 
       const field = $(this).attr('data-field');

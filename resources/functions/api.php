@@ -26,6 +26,7 @@ if (isset($_REQUEST['village'])) {
     }
 }
 
+
 if(isset($_REQUEST['id']) && isset($_REQUEST['value']) && isset($_REQUEST['field'])) {
     
     $id=$_REQUEST['id'];
@@ -48,5 +49,27 @@ if(isset($_REQUEST['id']) && isset($_REQUEST['value']) && isset($_REQUEST['field
         exit;
     }
 
+
+}
+
+if(isset($_REQUEST['id'])){
+
+$id=$_REQUEST['id'];
+$res =  array();
+    $res['status'] = 400;
+    $res['name'] = NULL;
+    $query = "SELECT * from patient WHERE id = '$id'";
+    
+    $qr = mysqli_query($conn, $query);
+    $data = mysqli_fetch_assoc($qr);
+    if (!$data) {
+        echo json_encode($res);
+        exit;
+    } else {
+        $res['status'] = 200;
+        $res['data'] = $data;
+        echo json_encode($res);
+        exit;
+    }
 
 }
