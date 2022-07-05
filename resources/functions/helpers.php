@@ -116,3 +116,69 @@ NULL,'$name','$husband_name','$aadhar','$mobile','$address','$village','$block',
 
     return mysqli_query($conn, $insert_query);
 }
+
+function editPatient(
+    $uid,
+    $name,
+    $husband_name,
+    $aadhar,
+    $mobile,
+    $address,
+    $village,
+    $block,
+    $SHC,
+    $city,
+    $aasha,
+    $lmp,
+
+    $APH,
+    $eclampsia,
+    $PIH,
+    $anaemia,
+    $obstructed_labor,
+    $PPH,
+    $LSCS,
+    $congenital_anamaly,
+    $abortion,
+    $others_1,
+    $tuberculosis,
+    $hypertension,
+    $heart_disease,
+    $diabetes,
+    $asthma,
+    $other_2
+
+) {
+
+    global $conn;
+
+    $update_query = "UPDATE  patient SET 
+    name = '$name' , 
+    husband_name = '$husband_name' ,
+    aadhar='$aadhar',
+    mobile='$mobile',
+    address='$address',
+    village='$village',
+    block='$block',
+    SHC ='$SHC',
+    city='$city',
+    aasha='$aasha',
+    lmp = '$lmp' ,
+    APH = '$APH' , 
+    eclampsia = '$eclampsia' , 
+    PIH =   '$PIH' ,
+    anaemia =   '$anaemia' ,
+    obstructed_labor =  '$obstructed_labor'  ,
+    PPH =   '$PPH' ,
+    LSCS =  '$LSCS' , 
+    congenital_anamaly =    '$congenital_anamaly' ,
+    abortion =  '$abortion' ,
+    others_1 =  '$others_1' , 
+    tuberculosis =  '$tuberculosis' ,
+    hypertension =  '$hypertension' , 
+    heart_disease = '$heart_disease' , 
+    diabetes =  '$diabetes' , 
+    asthma =  '$asthma' , 
+    other_2 = '$other_2' WHERE id ='$uid'";
+    return mysqli_query($conn, $update_query);
+}

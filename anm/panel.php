@@ -2,6 +2,8 @@
 session_start();
 $successful = false;
 $failed = false;
+$editSuccessful=false;
+$editFailed=false;
 require('../resources/functions/helpers.php');
 $anm_name = $_SESSION['anm_data']['name'];
 $SHC = $_SESSION['anm_data']['SHC'];
@@ -73,6 +75,74 @@ if (isset($_POST['add_patient'])) {
       sendSMSOnRegistration($aadhar);
    }
 }
+if (isset($_POST['edit_patient'])) {
+   $uid = $_POST['uid'];
+   $name = $_POST['e-name'];
+   $husband_name = $_POST['e-husband_name'];
+   $aadhar = $_POST['e-aadhar'];
+   $mobile = $_POST['e-mobile'];
+   $address = $_POST['e-address'];
+   $village = $_POST['e-village'];
+   $block = $block_name;
+   $SHC = $SHC;
+   $city = $city_name;
+   $aasha = $_POST['e-aasha'];
+   $lmp = $_POST['e-lmp'];
+   isset($_POST['e-APH']) ? $APH = $_POST['e-APH'] : $APH = 0;
+   isset($_POST['e-eclampsia']) ? $eclampsia = $_POST['e-eclampsia'] : $eclampsia = 0;
+   isset($_POST['e-PIH']) ? $PIH = $_POST['e-PIH'] : $PIH = 0;
+   isset($_POST['e-anaemia']) ? $anaemia = $_POST['e-anaemia'] : $anaemia = 0;
+   isset($_POST['e-obstructed_labor']) ? $obstructed_labor = $_POST['e-obstructed_labor'] : $obstructed_labor = 0;
+   isset($_POST['e-PPH']) ? $PPH = $_POST['e-PPH'] : $PPH = 0;
+   isset($_POST['e-LSCS']) ? $LSCS = $_POST['e-LSCS'] : $LSCS = 0;
+   isset($_POST['e-congenital_anamaly']) ? $congenital_anamaly = $_POST['e-congenital_anamaly'] : $congenital_anamaly = 0;
+   isset($_POST['e-abortion']) ? $abortion = $_POST['e-abortion'] : $abortion = 0;
+   isset($_POST['e-others_1']) ? $others_1 = $_POST['e-others_1'] : $others_1 = 0;
+   isset($_POST['e-tuberculosis']) ? $tuberculosis = $_POST['e-tuberculosis'] : $tuberculosis = 0;
+   isset($_POST['e-hypertension']) ? $hypertension = $_POST['e-hypertension'] : $hypertension = 0;
+   isset($_POST['e-heart_disease']) ? $heart_disease = $_POST['e-heart_disease'] : $heart_disease = 0;
+   isset($_POST['e-diabetes']) ? $diabetes = $_POST['e-diabetes'] : $diabetes = 0;
+   isset($_POST['e-asthma']) ? $asthma = $_POST['e-asthma'] : $asthma = 0;
+   isset($_POST['e-other_2']) ? $other_2 = $_POST['e-other_2'] : $other_2 = 0;
+
+   
+   
+
+   if (editPatient(
+      $uid,
+      $name,
+      $husband_name,
+      $aadhar,
+      $mobile,
+      $address,
+      $village,
+      $block,
+      $SHC,
+      $city,
+      $aasha,
+      $lmp,
+      $APH,
+      $eclampsia,
+      $PIH,
+      $anaemia,
+      $obstructed_labor,
+      $PPH,
+      $LSCS,
+      $congenital_anamaly,
+      $abortion,
+      $others_1,
+      $tuberculosis,
+      $hypertension,
+      $heart_disease,
+      $diabetes,
+      $asthma,
+      $other_2
+   ))
+      $editSuccessful = true;
+   else $editFailed = true;
+}
+
+
 $all_patients_data = getAllPatients($SHC);
 ?>
 <?php
@@ -117,6 +187,13 @@ include '../resources/sections/anm_menu.php';
          echo '<div class="alert alert-success" role="alert"><h6 class="text-success text-center">नया Patient जोड़ा गया</h6></div>';
       if ($failed)
          echo '<div class="alert alert-danger" role="alert"><h6 class="text-danger text-center">Patient जोड़ने में असमर्थ</h6></div>';
+      
+      if ($editSuccessful)
+         echo '<div class="alert alert-success" role="alert"><h6 class="text-success text-center">Patient Details Updated Successfully</h6></div>';
+      if ($editFailed)
+         echo '<div class="alert alert-danger" role="alert"><h6 class="text-danger text-center">Failed to Update</h6></div>';
+      
+      
       ?>
       <h3 class="text-center"><?= $block_name ?> Patients List</h3>
       <div class="table-responsive tscroll" >
@@ -318,6 +395,7 @@ include '../resources/sections/anm_menu.php';
                      <div class="mb-3">
                         <label for="name" id="name-label" class="form-label">Name</label>
                         <input type="text" class="form-control" name="e-name" id="e-name" required>
+                        <input type="hidden" class="form-control" name="uid" id="uid" required>
                      </div>
                      <div class="mb-3">
                         <label for="husband_name" id="husband_name-label" class="form-label">Husband Name</label>
@@ -477,6 +555,7 @@ include '../resources/sections/anm_menu.php';
          type: "GET",
          success : function(res){
             const data=JSON.parse(res).data;
+            console.log(data);
             $('#e-name').val(data.name);
             $('#e-husband_name').val(data.husband_name);
             $('#e-aadhar').val(data.aadhar);
@@ -484,8 +563,24 @@ include '../resources/sections/anm_menu.php';
             $('#e-address').val(data.address);
             $('#e-village').val(data.village);
             $('#e-lmp').val(data.lmp);
+            $('#uid').val(data.id);
             
-            data.APH == 1 ? $('#e-APH').prop('checked', true):  $('#e-APH').prop('checked', false);
+            data.APH == 1 ? $('#e-aph').attr('checked', 'checked') :  $('#e-APH').prop('checked', false);
+            data.eclampsia == 1 ? $('#e-Eclampsia').attr('checked', 'checked') :  $('#e-Eclampsia').prop('checked', false);
+            data.PIH == 1 ? $('#e-PIH').attr('checked', 'checked') :  $('#e-PIH').prop('checked', false);
+            data.anaemia == 1 ? $('#e-Anaemia').attr('checked', 'checked') :  $('#e-Anaemia').prop('checked', false);
+            data.obstructed_labor == 1 ? $('#e-Obstructed_Labor').attr('checked', 'checked') :  $('#e-Obstructed_Labor').prop('checked', false);
+            data.PPH == 1 ? $('#e-PPH').attr('checked', 'checked') :  $('#e-PPH').prop('checked', false);
+            data.LSCS == 1 ? $('#e-LSCS').attr('checked', 'checked') :  $('#e-LSCS').prop('checked', false);
+            data.congenital_anamaly == 1 ? $('#e-Congenital_Anamaly').attr('checked', 'checked') :  $('#e-Congenital_Anamaly').prop('checked', false);
+            data.abortion == 1 ? $('#e-Abortion').attr('checked', 'checked') :  $('#e-Abortion').prop('checked', false);
+            data.others_1 == 1 ? $('#e-Others').attr('checked', 'checked') :  $('#e-Others').prop('checked', false);
+            data.tuberculosis == 1 ? $('#e-Tuberculosis').attr('checked', 'checked') :  $('#e-Tuberculosis').prop('checked', false);
+            data.hypertension == 1 ? $('#e-Hypertension').attr('checked', 'checked') :  $('#e-Hypertension').prop('checked', false);
+            data.heart_disease == 1 ? $('#e-Heart_Disease').attr('checked', 'checked') :  $('#e-Heart_Disease').prop('checked', false);
+            data.diabetes == 1 ? $('#e-Diabetes').attr('checked', 'checked') :  $('#e-Diabetes').prop('checked', false);
+            data.asthma == 1 ? $('#e-Asthma').attr('checked', 'checked') :  $('#e-Asthma').prop('checked', false);
+            data.other_2 == 1 ? $('#e-Other').attr('checked', 'checked') :  $('#e-Other').prop('checked', false);
 
 
 
