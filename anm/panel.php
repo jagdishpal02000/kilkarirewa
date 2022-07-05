@@ -105,7 +105,7 @@ if (isset($_POST['edit_patient'])) {
    isset($_POST['e-asthma']) ? $asthma = $_POST['e-asthma'] : $asthma = 0;
    isset($_POST['e-other_2']) ? $other_2 = $_POST['e-other_2'] : $other_2 = 0;
 
-   
+
    
 
    if (editPatient(
@@ -264,10 +264,13 @@ include '../resources/sections/anm_menu.php';
                      <div class="mb-3">
                         <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number</label>
                         <input type="number" class="form-control" name="aadhar" id="aadhar" required>
+                        <small id="aadharError" style="display: none" class="form-text text-danger">Please Enter 12 Digit valid aadhar number.</small>
+
                      </div>
                      <div class="mb-3">
                         <label for="mobile" id="mobile-label" class="form-label">Mobile Number</label>
                         <input type="number" class="form-control" name="mobile" id="mobile" required>
+                        <small id="mobileError" style="display: none" class="form-text text-danger">Please Enter 10 Digit valid mobile number.</small>
                      </div>
                      <div class=" mb-3">
                         <label for="address" id="address-label" class="form-label">Address</label>
@@ -304,7 +307,7 @@ include '../resources/sections/anm_menu.php';
                         <input type="date" class="form-control" id="lmp" name="lmp" required>
                      </div>
                      <div class="mb-3">
-                        <label for="reasons" class="form-label">Complication in Previous Pregnancy</label><br>
+                       <b> <label for="reasons" class="form-label">Complication in Previous Pregnancy</label></b><hr>
                         <input class="form-check-input" type="checkbox" value="1" name="APH" id="aph">
                         <label class="form-check-label" for="aph">
                            a) APH
@@ -320,7 +323,7 @@ include '../resources/sections/anm_menu.php';
                         <input class="form-check-input" type="checkbox" value="1" name="anaemia" id="Anaemia">
                         <label class="form-check-label" for="Anaemia">
                            d) Anaemia
-                        </label>
+                        </label><br>
                         <input class="form-check-input" type="checkbox" value="1" name="obstructed_labor" id="Obstructed_Labor">
                         <label class="form-check-label" for="Obstructed_Labor">
                            e) Obstructed Labor
@@ -332,7 +335,7 @@ include '../resources/sections/anm_menu.php';
                         <input class="form-check-input" type="checkbox" value="1" name="LSCS" id="LSCS">
                         <label class="form-check-label" for="LSCS">
                            g) LSCS
-                        </label>
+                        </label><br>
                         <input class="form-check-input" type="checkbox" value="1" name="congenital_anamaly" id="Congenital_Anamaly">
                         <label class="form-check-label" for="Congenital_Anamaly">
                            h) Congenital Anamaly
@@ -346,7 +349,7 @@ include '../resources/sections/anm_menu.php';
                            j) Others
                         </label>
                         <br>
-                        <label class="form-label">Past History</label><br>
+                        <b><label class="form-label mt-2">Past History</label></b><hr>
                         <input class="form-check-input" type="checkbox" value="1" name="tuberculosis" id="Tuberculosis">
                         <label class="form-check-label" for="Tuberculosis">
                            a) Tuberculosis
@@ -358,7 +361,7 @@ include '../resources/sections/anm_menu.php';
                         <input class="form-check-input" type="checkbox" value="1" name="heart_disease" id="Heart_Disease">
                         <label class="form-check-label" for="Heart_Disease">
                            c) Heart Disease
-                        </label>
+                        </label><br>
                         <input class="form-check-input" type="checkbox" value="1" name="diabetes" id="Diabetes">
                         <label class="form-check-label" for="Diabetes">
                            d) Diabetes
@@ -375,7 +378,7 @@ include '../resources/sections/anm_menu.php';
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                     <button type="submit" name="add_patient" class=" btn btn-primary">Add Patient</button>
+                     <button type="submit" name="add_patient" id="add_patient" class=" btn btn-primary">Add Patient</button>
                   </div>
             </form>
          </div>
@@ -404,10 +407,12 @@ include '../resources/sections/anm_menu.php';
                      <div class="mb-3">
                         <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number</label>
                         <input type="number" class="form-control" name="e-aadhar" id="e-aadhar" required>
+                        <small id="e-aadharError" class="form-text text-danger">Please Enter 12 Digit valid aadhar number.</small>
                      </div>
                      <div class="mb-3">
                         <label for="mobile" id="mobile-label" class="form-label">Mobile Number</label>
                         <input type="number" class="form-control" name="e-mobile" id="e-mobile" required>
+                        <small id="e-mobileError" class="form-text text-danger">Please Enter 10 Digit valid mobile number.</small>
                      </div>
                      <div class=" mb-3">
                         <label for="address" id="address-label" class="form-label">Address</label>
@@ -437,14 +442,14 @@ include '../resources/sections/anm_menu.php';
                      </div>
                      <div class="mb-3">
                         <label for="aasha" id="aasha-label" class="form-label">Aasha</label>
-                        <input type="text" readonly class="form-control" name="e-aasha" id="e-aasha">
+                        <input type="text" readonly class="form-control"  name="e-aasha" id="e-aasha">
                      </div>
                      <div class="mb-3">
                         <label for="lmp" id="lmp-label" class="form-label">LMP</label>
                         <input type="date" class="form-control" id="e-lmp" name="e-lmp" required>
                      </div>
-                     <div class="mb-3">
-                        <label for="reasons" class="form-label">Complication in Previous Pregnancy</label><br>
+                     <div class="mb-3"><b>
+                        <label for="reasons" class="form-label">Complication in Previous Pregnancy</label></b><hr>
                         <input class="form-check-input" type="checkbox" value="1" name="e-APH" id="e-aph">
                         <label class="form-check-label" for="e-aph">
                            a) APH
@@ -460,7 +465,7 @@ include '../resources/sections/anm_menu.php';
                         <input class="form-check-input" type="checkbox" value="1" name="e-anaemia" id="e-Anaemia">
                         <label class="form-check-label" for="e-Anaemia">
                            d) Anaemia
-                        </label>
+                        </label><br>
                         <input class="form-check-input" type="checkbox" value="1" name="e-obstructed_labor" id="e-Obstructed_Labor">
                         <label class="form-check-label" for="e-Obstructed_Labor">
                            e) Obstructed Labor
@@ -472,7 +477,7 @@ include '../resources/sections/anm_menu.php';
                         <input class="form-check-input" type="checkbox" value="1" name="e-LSCS" id="e-LSCS">
                         <label class="form-check-label" for="e-LSCS">
                            g) LSCS
-                        </label>
+                        </label><br>
                         <input class="form-check-input" type="checkbox" value="1" name="e-congenital_anamaly" id="e-Congenital_Anamaly">
                         <label class="form-check-label" for="e-Congenital_Anamaly">
                            h) Congenital Anamaly
@@ -486,7 +491,7 @@ include '../resources/sections/anm_menu.php';
                            j) Others
                         </label>
                         <br>
-                        <label class="form-label">Past History</label><br>
+                        <b><label class="form-label">Past History</label></b><hr>
                         <input class="form-check-input" type="checkbox" value="1" name="e-tuberculosis" id="e-Tuberculosis">
                         <label class="form-check-label" for="e-Tuberculosis">
                            a) Tuberculosis
@@ -498,7 +503,7 @@ include '../resources/sections/anm_menu.php';
                         <input class="form-check-input" type="checkbox" value="1" name="e-heart_disease" id="e-Heart_Disease">
                         <label class="form-check-label" for="e-Heart_Disease">
                            c) Heart Disease
-                        </label>
+                        </label><br>
                         <input class="form-check-input" type="checkbox" value="1" name="e-diabetes" id="e-Diabetes">
                         <label class="form-check-label" for="e-Diabetes">
                            d) Diabetes
@@ -515,7 +520,7 @@ include '../resources/sections/anm_menu.php';
                   </div>
                   <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                     <button type="submit" name="edit_patient" class=" btn btn-primary">Edit Patient</button>
+                     <button type="submit" name="edit_patient" id="edit_patient" class=" btn btn-primary">Edit Patient</button>
                   </div>
             </form>
          </div>
@@ -546,6 +551,60 @@ include '../resources/sections/anm_menu.php';
          $('#aasha').val('');
       }
    });
+   $('#e-aadhar').on('input',  () => {
+      if($('#e-aadhar').val().length !== 12){
+         $('#e-aadharError').show();
+         $('#edit_patient').prop('disabled', true);
+      }
+      else{
+         $('#e-aadharError').hide();
+         $('#edit_patient').prop('disabled', false);
+      }
+   });
+   
+   $('#e-mobile').on('input',  () => {
+      if($('#e-mobile').val().length !== 10){
+         $('#e-mobileError').show();
+         $('#edit_patient').prop('disabled', true);
+      }
+      else{
+         $('#e-mobileError').hide();
+         $('#edit_patient').prop('disabled', false);
+      }
+   });
+   $('#aadhar').on('input',  () => {
+      if($('#aadhar').val().length !== 12){
+         $('#aadharError').show();
+         $('#add_patient').prop('disabled', true);
+      }
+      else{
+         $('#aadharError').hide();
+         $('#add_patient').prop('disabled', false);
+      }
+   });
+   
+   $('#mobile').on('input',  () => {
+      if($('#mobile').val().length !== 10){
+         $('#mobileError').show();
+         $('#add_patient').prop('disabled', true);
+      }
+      else{
+         $('#mobileError').hide();
+         $('#add_patient').prop('disabled', false);
+      }
+   });
+
+   $('#e-village').on('change', async () => {
+      const village = $('#e-village').find(":selected").text();
+      const resp = await fetch(`${apiUrl}?village=${village}`);
+      const resp_json = await resp.json();
+      console.log(resp_json);
+      if (resp_json.status === 200) {
+         $('#e-aasha').val(resp_json.name);
+      } else {
+         $('#e-aasha').val('');
+      }
+   });
    
    $( "body" ).on( "click", ".edit-btn", function() {
       let id=$(this).attr('data-id');
@@ -564,6 +623,7 @@ include '../resources/sections/anm_menu.php';
             $('#e-village').val(data.village);
             $('#e-lmp').val(data.lmp);
             $('#uid').val(data.id);
+            $('#e-aasha').val(data.aasha);
             
             data.APH == 1 ? $('#e-aph').attr('checked', 'checked') :  $('#e-APH').prop('checked', false);
             data.eclampsia == 1 ? $('#e-Eclampsia').attr('checked', 'checked') :  $('#e-Eclampsia').prop('checked', false);
