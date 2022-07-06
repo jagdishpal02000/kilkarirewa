@@ -18,6 +18,7 @@ function sendSMS($mobileNumber,$message){
     global $senderId ;
     global $route ;
     global $url;
+    
     $message = urlencode($message);
     $postData = array(
                 'authkey' => $authKey,
