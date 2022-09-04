@@ -1,41 +1,44 @@
 <?php
 include('config.php');
 
-function sendSMSOnRegistration($aadhar){
+function sendSMSOnRegistration($aadhar)
+{
     global $conn;
     $query = "SELECT * FROM patient WHERE aadhar='$aadhar' ";
     $temp_result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($temp_result);
-    $mobileNumber=$row['mobile'];
-    $name=$row['name'];
-    $message="श्रीमति $name, आपकी गर्भावस्था जांच के साथ किलकारी पोर्टल में पंजीयन हो गया है।";
-    return sendSMS($mobileNumber,$message);
+    $mobileNumber = $row['mobile'];
+    $name = $row['name'];
+    $message = "श्रीमति $name, आपकी गर्भावस्था जांच के साथ किलकारी पोर्टल में पंजीयन हो गया है।";
+    return sendSMS($mobileNumber, $message);
 }
 
 
-function sendSMS($mobileNumber,$message){
+function sendSMS($mobileNumber, $message)
+{
     global $authKey;
-    global $senderId ;
-    global $route ;
+    global $senderId;
+    global $route;
     global $url;
-    
+
     $message = urlencode($message);
     $postData = array(
-                'authkey' => $authKey,
-                'mobiles' => $mobileNumber,
-                'message' => $message,
-                'sender' => $senderId,
-                'route' => $route
-                );
+        'authkey' => $authKey,
+        'mobiles' => $mobileNumber,
+        'message' => $message,
+        'sender' => $senderId,
+        'route' => $route
+    );
     $ch = curl_init();
     curl_setopt_array($ch, array(
-                        CURLOPT_URL => $url,
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_POST => true,
-                        CURLOPT_POSTFIELDS => $postData));
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $postData
+    ));
     // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
     // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    
+
     // $output = curl_exec($ch);
     // if(curl_errno($ch))
     // {

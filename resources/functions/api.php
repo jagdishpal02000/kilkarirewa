@@ -1,4 +1,13 @@
 <?php
+session_start();
+if(!$_SESSION){
+    $res =  array();
+    $res['status'] = 400;
+    $res['error'] = "Authentication failed";
+   echo json_encode($res);
+   exit;
+}
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header("Access-Control-Allow-Headers: X-Requested-With");

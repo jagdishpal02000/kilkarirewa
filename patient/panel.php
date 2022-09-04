@@ -14,7 +14,7 @@
    include '../resources/sections/head.php';
    ?>
 <title>Patient Panel | Kilkari Abhiyan</title>
-<meta name="description" content= in page for ANM and pati
+<meta name="description" content="in page for ANM and patient">
 <meta property="og:title" content="Patient Panel | Kilkari Abhiyan">
 <meta property="og:description" content="View your scheduled check up details.">
 <meta name="twitter:title" content="Patient Panel | Kilkari Abhiyan">
