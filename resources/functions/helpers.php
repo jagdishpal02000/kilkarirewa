@@ -1,5 +1,5 @@
 <?php
-include('../resources/functions/config.php');
+include('config.php');
 
 function sendSMSOnRegistration($aadhar){
     global $conn;

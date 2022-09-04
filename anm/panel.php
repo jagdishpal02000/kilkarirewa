@@ -162,7 +162,7 @@ include '../resources/sections/head.php';
   left: 0;
   background-color: white;
 }
-.checkbox,.edit-btn {
+.checkbox,.edit-btn,.view-single-btn {
    cursor:pointer;
 }
 
@@ -180,6 +180,21 @@ include '../resources/sections/header.php';
 <?php
 include '../resources/sections/anm_menu.php';
 ?>
+<div class="container">
+      <div class="row">
+         <div class="col-3">
+            <label for="from" class="form-label">From</label>
+            <input type="date" name="from" id="from" class="form-control">
+         </div>
+         <div class="col-3">
+            <label for="to" class="form-label">To</label>
+            <input type="date" id="to" name="to" class="form-control">
+         </div>
+         <div class="row">
+            <label id="export_error" style="display:none;color:red" for="">Please Select Dates</label>
+         <button type="button" id="export_data" class="btn btn-dark btn-primary" style="user-select: auto;">Export</button></div>
+      </div>
+</div>
 <section>
    <div class="container">
       <?php
@@ -208,6 +223,7 @@ include '../resources/sections/anm_menu.php';
                <th scope="col">CheckUp 1</th>
                <th scope="col">CheckUp 2</th>
                <th scope="col">CheckUp 3</th>
+               <th scope="col">CheckUp 4</th>
                <th scope="col">Delivery</th>
                <th scope="col">Edit</th>
             </tr>
@@ -229,14 +245,16 @@ include '../resources/sections/anm_menu.php';
                <td>" . $patient['mobile'] . "</td>
                <td>" . $patient['aasha'] . "</td>
                <td>" . $patient['lmp'] . "</td>
+               <td><input type='checkbox' class='checkup' name='ac0_".$i."' value='1' disabled checked data-id=".$patient['id']." data-field='ac0'/></td>
                <td><input type='checkbox' class='checkup' name='ac1_".$i."' value='1' $ac1_checked data-id=".$patient['id']." data-field='ac1'/></td>
                <td><input type='checkbox' class='checkup' name='ac2_".$i."' value='1' $ac2_checked data-id=".$patient['id']." data-field='ac2' /></td>
                <td><input type='checkbox' class='checkup' name='ac3_".$i."' value='1' $ac3_checked data-id=".$patient['id']." data-field='ac3' /></td>
                <td><input type='checkbox' class='checkup' name='delivery".$i."' value='1' $delivery_checked data-id=".$patient['id']." value='1'  data-field='delivery' /></td>
-               <td><svg  xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' class='bi bi-pencil-square edit-btn' data-id='".$patient['id']."' viewBox='0 0 24 24' data-bs-toggle='modal' data-bs-target='#editPatient' aria-current='page'>
-               <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
-               <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>
+               <td class='view-single-btn bi bi-pencil-square'><svg xmlns='http://www.w3.org/2000/svg' class='view-single-btn bi bi-pencil-square' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'  data-id='".$patient['id']."' viewBox='0 0 24 24' data-bs-toggle='modal' data-bs-target='#viewSinglePatient' aria-current='page'>
+               <path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z'/>
+               <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z'/>
              </svg></td>
+               
                </tr>";
                $i++;
             } ?>
@@ -527,6 +545,143 @@ include '../resources/sections/anm_menu.php';
       </div>
    <!-- end Model for edit Patient -->
 
+</div>
+
+  <!--start  Model for view Single Patient -->
+<div class="modal fade" id="viewSinglePatient" tabindex="-1" aria-labelledby="viewSinglePatientLabel" aria-hidden="true">
+      <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="viewSinglePatientLabel">View Patient Data</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+                  <div class="mb-3">
+                     <label for="name" class="form-label">Name</label>
+                     <input type="text" readonly class="form-control" name="v-name" id="v-name" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="husband_name"  class="form-label">Husband Name</label>
+                     <input type="text" readonly class="form-control" name="v-husband_name" id="v-husband_name" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="aadhar" class="form-label">Aadhar Number</label>
+                     <input type="number" readonly class="form-control" name="v-aadhar" id="v-aadhar" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="mobile" class="form-label">Mobile Number</label>
+                     <input type="number" readonly class="form-control" name="v-mobile" id="v-mobile" required>
+                  </div>
+                  <div class=" mb-3">
+                     <label for="address"  class="form-label">Address</label>
+                     <input type="text" readonly class="form-control" name="v-address" id="v-address" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="village" class="form-label">Village Name</label>
+                     <select disabled class="form-control" name="v-village" id="v-village" required>
+                        <option value="-1" selected disabled>Choose village</option>
+                        <?php for ($i = 0; $i < count($village_list); $i++) {
+                           echo "<option value=\"$village_list[$i]\">$village_list[$i]</option>";
+                        }
+                        ?>
+                     </select>
+                  </div>
+                  <div class="mb-3">
+                     <label for="SCH" class="form-label">SHC Name</label>
+                     <input type="text" disabled value="<?= $SHC ?>" class="form-control" name="v-SHC" id="e-SHC" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="block" class="form-label">Block Name</label>
+                     <input type="text" disabled value="<?= $block_name ?>" class="form-control" name="e-block" id="v-block" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="city" class="form-label">City</label>
+                     <input type="text" disabled value="<?= $city_name; ?>" class="form-control" name="v-city" id="v-city" required>
+                  </div>
+                  <div class="mb-3">
+                     <label for="aasha" class="form-label">Aasha</label>
+                     <input type="text" readonly class="form-control"  name="v-aasha" id="v-aasha">
+                  </div>
+                  <div class="mb-3">
+                     <label for="lmp" class="form-label">LMP</label>
+                     <input type="date" readonly class="form-control" id="v-lmp" name="v-lmp" required>
+                  </div>
+                  <div class="mb-3"><b>
+                     <label for="reasons" class="form-label">Complication in Previous Pregnancy</label></b><hr>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-APH" id="v-aph">
+                     <label class="form-check-label" for="v-aph">
+                        a) APH
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-eclampsia" id="v-Eclampsia">
+                     <label class="form-check-label"  for="v-Eclampsia">
+                        b) Eclampsia
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-PIH" id="v-PIH">
+                     <label class="form-check-label" for="v-PIH">
+                        c) PIH
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-anaemia" id="v-Anaemia">
+                     <label class="form-check-label" for="v-Anaemia">
+                        d) Anaemia
+                     </label><br>
+                     <input class="form-check-input"  disabled type="checkbox" value="1" name="v-obstructed_labor" id="v-Obstructed_Labor">
+                     <label class="form-check-label" for="v-Obstructed_Labor">
+                        e) Obstructed Labor
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-PPH" id="v-PPH">
+                     <label class="form-check-label" for="v-PPH">
+                        f) PPH
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-LSCS" id="v-LSCS">
+                     <label class="form-check-label" for="v-LSCS">
+                        g) LSCS
+                     </label><br>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-congenital_anamaly" id="v-Congenital_Anamaly">
+                     <label class="form-check-label" for="v-Congenital_Anamaly">
+                        h) Congenital Anamaly
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-abortion" id="v-Abortion">
+                     <label class="form-check-label" for="v-Abortion">
+                        i) Abortion
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-others_1" id="v-Others">
+                     <label class="form-check-label" for="v-Others">
+                        j) Others
+                     </label>
+                     <br>
+                     <b><label class="form-label">Past History</label></b><hr>
+                     <input class="form-check-input"  disabled type="checkbox" value="1" name="v-tuberculosis" id="v-Tuberculosis">
+                     <label class="form-check-label" for="v-Tuberculosis">
+                        a) Tuberculosis
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-hypertension" id="v-Hypertension">
+                     <label class="form-check-label" for="v-Hypertension">
+                        b) Hypertension
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-heart_disease" id="v-Heart_Disease">
+                     <label class="form-check-label" for="v-Heart_Disease">
+                        c) Heart Disease
+                     </label><br>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-diabetes" id="v-Diabetes">
+                     <label class="form-check-label" for="v-Diabetes">
+                        d) Diabetes
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-asthma" id="v-Asthma">
+                     <label class="form-check-label" for="v-Asthma">
+                        e) Asthma
+                     </label>
+                     <input class="form-check-input" disabled type="checkbox" value="1" name="v-other_2" id="v-Other">
+                     <label class="form-check-label" for="v-Other">
+                        f) Other
+                     </label>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button id="editPatientBtn" class='btn btn-primary edit-btn' data-id='' data-bs-toggle='modal' data-bs-target='#editPatient' aria-current='page'>Edit Patient</button>
+               </div>
+      </div>
+   <!-- end Model for View Single Patient -->
    </div>
    
 </section>
@@ -607,8 +762,8 @@ include '../resources/sections/anm_menu.php';
    });
    
    $( "body" ).on( "click", ".edit-btn", function() {
-      let id=$(this).attr('data-id');
-      
+      let id=$('#editPatientBtn').attr('data-id');
+      console.log(id);
       $.ajax({ 
          url:apiUrl+`?id=${id}`,
          type: "GET",
@@ -643,10 +798,65 @@ include '../resources/sections/anm_menu.php';
             data.other_2 == 1 ? $('#e-Other').attr('checked', 'checked') :  $('#e-Other').prop('checked', false);
 
 
+         }
+      });
+
+   });
+   $( "body" ).on( "click", ".view-single-btn", function() {
+      const id=$(this).attr('data-id');
+      $('#editPatientBtn').attr('data-id',id); 
+
+      $.ajax({ 
+         url:apiUrl+`?id=${id}`,
+         type: "GET",
+         success : function(res){
+            const data=JSON.parse(res).data;
+            $('#v-name').val(data.name);
+            $('#v-husband_name').val(data.husband_name);
+            $('#v-aadhar').val(data.aadhar);
+            $('#v-mobile').val(data.mobile);
+            $('#v-address').val(data.address);
+            $('#v-village').val(data.village);
+            $('#v-lmp').val(data.lmp);
+            $('#v-aasha').val(data.aasha);
+            
+      
+            data.APH == 1 ? $('#v-aph').attr('checked', 'checked') :  $('#v-APH').prop('checked', false);
+            data.eclampsia == 1 ? $('#v-Eclampsia').attr('checked', 'checked') :  $('#v-Eclampsia').prop('checked', false);
+            data.PIH == 1 ? $('#v-PIH').attr('checked', 'checked') :  $('#v-PIH').prop('checked', false);
+            data.anaemia == 1 ? $('#v-Anaemia').attr('checked', 'checked') :  $('#v-Anaemia').prop('checked', false);
+            data.obstructed_labor == 1 ? $('#v-Obstructed_Labor').attr('checked', 'checked') :  $('#v-Obstructed_Labor').prop('checked', false);
+            data.PPH == 1 ? $('#v-PPH').attr('checked', 'checked') :  $('#v-PPH').prop('checked', false);
+            data.LSCS == 1 ? $('#v-LSCS').attr('checked', 'checked') :  $('#v-LSCS').prop('checked', false);
+            data.congenital_anamaly == 1 ? $('#v-Congenital_Anamaly').attr('checked', 'checked') :  $('#v-Congenital_Anamaly').prop('checked', false);
+            data.abortion == 1 ? $('#v-Abortion').attr('checked', 'checked') :  $('#v-Abortion').prop('checked', false);
+            data.others_1 == 1 ? $('#v-Others').attr('checked', 'checked') :  $('#v-Others').prop('checked', false);
+            data.tuberculosis == 1 ? $('#v-Tuberculosis').attr('checked', 'checked') :  $('#v-Tuberculosis').prop('checked', false);
+            data.hypertension == 1 ? $('#v-Hypertension').attr('checked', 'checked') :  $('#v-Hypertension').prop('checked', false);
+            data.heart_disease == 1 ? $('#v-Heart_Disease').attr('checked', 'checked') :  $('#v-Heart_Disease').prop('checked', false);
+            data.diabetes == 1 ? $('#v-Diabetes').attr('checked', 'checked') :  $('#v-Diabetes').prop('checked', false);
+            data.asthma == 1 ? $('#v-Asthma').attr('checked', 'checked') :  $('#v-Asthma').prop('checked', false);
+            data.other_2 == 1 ? $('#v-Other').attr('checked', 'checked') :  $('#v-Other').prop('checked', false);
+
+
 
          }
       });
 
+   });
+   $( "body" ).on( "click", "#export_data", function() {
+      var from=$('#from').val();
+      var to=$('#to').val();
+      if(!to || !from){
+         $('#export_error').show();
+         setTimeout(5000,()=>{
+            $('#export_error').hide();
+         });
+         return false;
+      }
+      else{
+         window.open(`export.php?from=${from}&to=${to}`,'_blank');
+      }
    });
    $( "body" ).on( "click", ".checkup", function() {
       const id = $(this).attr('data-id'); 
