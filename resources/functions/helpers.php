@@ -4,49 +4,37 @@ include('config.php');
 function sendSMSOnRegistration($aadhar)
 {
     global $conn;
+    global $UserRegistrationTempId;
+
     $query = "SELECT * FROM patient WHERE aadhar='$aadhar' ";
     $temp_result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($temp_result);
     $mobileNumber = $row['mobile'];
     $name = $row['name'];
-    $message = "श्रीमति $name, आपकी गर्भावस्था जांच के साथ किलकारी पोर्टल में पंजीयन हो गया है।";
-    return sendSMS($mobileNumber, $message);
+    $message = "श्रीमति $name, आपकी गर्भावस्था जांच के साथ किलकारी पोर्टल में पंजीयन हो गया है। Kilkari (CMHO, Rewa) - Velvish";
+    return sendSMS($mobileNumber, $message,$UserRegistrationTempId);
 }
 
-
-function sendSMS($mobileNumber, $message)
-{
+function sendSMS($mobile,$message,$TEMPLATE_ID){
     global $authKey;
     global $senderId;
     global $route;
     global $url;
-
+    
     $message = urlencode($message);
-    $postData = array(
-        'authkey' => $authKey,
-        'mobiles' => $mobileNumber,
-        'message' => $message,
-        'sender' => $senderId,
-        'route' => $route
-    );
-    $ch = curl_init();
-    curl_setopt_array($ch, array(
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $postData
-    ));
-    // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    $mobileNumber='91'.$mobile;
+    $request_url="$url?authkey=$authKey&mobiles=$mobileNumber&message=$message&sender=$senderId&route=$route&country=0&unicode=1&DLT_TE_ID=$TEMPLATE_ID";
+	$curl = curl_init($request_url);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, [
+	  'Content-Type: application/json'
+	]);
 
-    // $output = curl_exec($ch);
-    // if(curl_errno($ch))
-    // {
-    //     curl_close($ch);
-    //     return 'error:' . curl_error($ch);
-    // }
-    // curl_close($ch);
-    // return $output;
+	$output = curl_exec($curl);
+	$result = json_decode($output, true);
+
+	return $result;
+
 }
 
 
@@ -185,4 +173,21 @@ function editPatient(
     asthma =  '$asthma' , 
     other_2 = '$other_2' WHERE id ='$uid'";
     return mysqli_query($conn, $update_query);
+}
+
+
+
+function getAllDataFromDate($from,$to,$SHC){
+    
+    global $conn;
+
+    $query = "SELECT p.name,p.husband_name,p.aadhar,p.village,p.mobile,p.block,p.SHC,p.city,p.aasha,p.lmp,p.APH,p.eclampsia,p.PIH,p.anaemia,p.obstructed_labor,p.PPH,p.LSCS,p.congenital_anamaly,p.abortion,p.others_1,p.tuberculosis,p.hypertension,p.heart_disease,p.diabetes,p.asthma,p.other_2,p.address,p.ac1,p.ac2,p.ac3,p.delivery,anm.name as anm_name FROM patient p INNER JOIN anm ON anm.SHC=p.SHC WHERE p.lmp>='$from' and p.lmp<='$to' and p.SHC='$SHC'";
+    $temp_result = mysqli_query($conn, $query);
+
+    $resp_data=array(); 
+    while($row = mysqli_fetch_assoc($temp_result)){
+            array_push($resp_data, $row);
+
+    }
+   return $resp_data;
 }

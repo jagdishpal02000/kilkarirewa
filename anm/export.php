@@ -1,6 +1,7 @@
 <?php
 session_start();
-if (!$_SESSION) die('something went wrong, please login again');
+if(!isset($_SESSION['type']) || $_SESSION['type'] !='anm') header('location:../index.php');
+
 require('../resources/functions/helpers.php');
 if (!$_REQUEST['from'] || empty($_REQUEST['from']) || !$_REQUEST['to'] || empty($_REQUEST['to']))
     die('please select valid dates');
@@ -10,10 +11,11 @@ $SHC = $_SESSION['anm_data']['SHC'];
 $block_name = $_SESSION['anm_data']['block'];
 $city_name = $_SESSION['anm_data']['city'];
 $village_list = getVillages($SHC);
-$all_patients_data = getAllPatients($SHC);
 $from = $_REQUEST['from'];
 $to = $_REQUEST['to'];
+$all_patients_data = getAllDataFromDate($from,$to,$SHC);
 $file_name = "kilkarirewa_$from" . "_ " . $to;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,30 +32,86 @@ $file_name = "kilkarirewa_$from" . "_ " . $to;
     <table id="dataTable" class="table table-hover border" style="overflow: auto;">
         <thead>
             <tr>
-                <th scope="col">S.No.</th>
-                <th class="freeze" style="background-color:white;position:sticky;left:0;z-index:2;" scope="col">Patient Name</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">Aasha</th>
-                <th scope="col">LMP</th>
+            <th scope="col">Sr.No.</th>
+            <th scope="col">NAME</th>
+            <th scope="col">HUSBAND NAME</th>
+            <th scope="col">AADHAR</th>
+            <th scope="col">VILLAGE</th>
+            <th scope="col">MOBILE</th>
+            <th scope="col">BLOCK</th>
+            <th scope="col">SHC</th>
+            <th scope="col">CITY</th>
+            <th scope="col">ANM</th>
+            <th scope="col">AASHA</th>
+            <th scope="col">LMP</th>
+            <th scope="col">AC1</th>
+            <th scope="col">AC2</th>
+            <th scope="col">AC3</th>
+            <th scope="col">AC4</th>
+            <th scope="col">DELIVERY</th>
+            <th scope="col">ADDRESS</th>
+            <th scope="col">APH</th>
+            <th scope="col">ECLAMPSIA</th>
+            <th scope="col">PIH</th>
+            <th scope="col">ANAEMIA</th>
+            <th scope="col">OBSTRUCTED LABOR</th>
+            <th scope="col">PPH</th>
+            <th scope="col">LSCS</th>
+            <th scope="col">CONGENITA ANAMALY</th>
+            <th scope="col">ABORTION</th>
+            <th scope="col">OTHERS 1</th>
+            <th scope="col">TUBERCULOSIS</th>
+            <th scope="col">HYPERTENSION</th>
+            <th scope="col">HEART DISEASE</th>
+            <th scope="col">DIABETES</th>
+            <th scope="col">ASTHMA</th>
+            <th scope="col">OTHER 2</th>
+
             </tr>
         </thead>
         <tbody>
             <?php
             $i = 1;
             foreach ($all_patients_data as $patient) {
-                $ac1_checked =  $patient['ac1'] == 1 ? 'checked' : '';
-                $ac2_checked =  $patient['ac2'] == 1 ? 'checked' : '';
-                $ac3_checked =  $patient['ac3'] == 1 ? 'checked' : '';
-                $delivery_checked =  $patient['delivery'] == 1 ? 'checked' : '';
 
-
+                $lmp = date('d-m-Y', strtotime($patient['lmp']));
                 echo "
                <tr>
                <th scope='row'>$i</th>
-               <td>" . $patient['name'] . "</td>
-               <td>" . $patient['mobile'] . "</td>
-               <td>" . $patient['aasha'] . "</td>
-               <td>" . $patient['lmp'] . "</td>
+                <td>".$patient['name']."</td>
+                <td>".$patient['husband_name']."</td>
+                <td>".$patient['aadhar']."</td>
+                <td>".$patient['village']."</td>
+                <td>".$patient['mobile']."</td>
+                <td>".$patient['block']."</td>
+                <td>".$patient['SHC']."</td>
+                <td>".$patient['city']."</td>
+                <td>".$patient['anm_name']."</td>
+                <td>".$patient['aasha']."</td>
+                <td>".$lmp."</td>
+                <td>1</td>
+                <td>".$patient['ac1']."</td>
+                <td>".$patient['ac2']."</td>
+                <td>".$patient['ac3']."</td>
+                <td>".$patient['delivery']."</td>
+                <td>".$patient['address']."</td>
+                <td>".$patient['APH']."</td>
+                <td>".$patient['eclampsia']."</td>
+                <td>".$patient['PIH']."</td>
+                <td>".$patient['anaemia']."</td>
+                <td>".$patient['obstructed_labor']."</td>
+                <td>".$patient['PPH']."</td>
+                <td>".$patient['LSCS']."</td>
+                <td>".$patient['congenital_anamaly']."</td>
+                <td>".$patient['abortion']."</td>
+                <td>".$patient['others_1']."</td>
+                <td>".$patient['tuberculosis']."</td>
+                <td>".$patient['hypertension']."</td>
+                <td>".$patient['heart_disease']."</td>
+                <td>".$patient['diabetes']."</td>
+                <td>".$patient['asthma']."</td>
+                <td>".$patient['other_2']."</td>
+                
                </tr>";
                 $i++;
             } ?>

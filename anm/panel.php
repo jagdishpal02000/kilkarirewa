@@ -1,5 +1,6 @@
 <?php
 session_start();
+if(!isset($_SESSION['type']) || $_SESSION['type'] !='anm') header('location:../index.php');
 $successful = false;
 $failed = false;
 $editSuccessful=false;
@@ -72,7 +73,7 @@ if (isset($_POST['add_patient'])) {
       $successful = true;
    else $failed = true;
    if ($successful) {
-      sendSMSOnRegistration($aadhar);
+     //sendSMSOnRegistration($aadhar);
    }
 }
 if (isset($_POST['edit_patient'])) {
@@ -149,7 +150,7 @@ $all_patients_data = getAllPatients($SHC);
 include '../resources/sections/head.php';
 ?>
 <title>Patient Panel | Kilkari Abhiyan</title>
-<meta name="description" content=in page for ANM and pati <meta property="og:title" content="Patient Panel | Kilkari Abhiyan">
+<meta name="description" content="page for ANM and patient"> <meta property="og:title" content="Patient Panel | Kilkari Abhiyan">
 <meta property="og:description" content="View your scheduled check up details.">
 <meta name="twitter:title" content="Patient Panel | Kilkari Abhiyan">
 <meta name="twitter:description" content="View your scheduled check up details.">
@@ -182,6 +183,7 @@ include '../resources/sections/anm_menu.php';
 ?>
 <div class="container">
       <div class="row">
+         <div class="col-3"></div>
          <div class="col-3">
             <label for="from" class="form-label">From</label>
             <input type="date" name="from" id="from" class="form-control">
@@ -190,9 +192,12 @@ include '../resources/sections/anm_menu.php';
             <label for="to" class="form-label">To</label>
             <input type="date" id="to" name="to" class="form-control">
          </div>
-         <div class="row">
-            <label id="export_error" style="display:none;color:red" for="">Please Select Dates</label>
-         <button type="button" id="export_data" class="btn btn-dark btn-primary" style="user-select: auto;">Export</button></div>
+         <div class="col-3"></div>
+      </div>
+      <div class="row">
+            <label id="export_error" style="display:none;color:red;margin:15px" class="text-center" for=""><b>Please Select Dates</b></label>
+         <button type="button" id="export_data" class="btn btn-dark btn-primary" style="user-select: auto;">Export</button>
+      </div>
       </div>
 </div>
 <section>
@@ -237,19 +242,35 @@ include '../resources/sections/anm_menu.php';
                $ac3_checked =  $patient['ac3'] == 1 ? 'checked' : '';
                $delivery_checked =  $patient['delivery'] == 1 ? 'checked' : '';
 
-
+               $lmp = date('d-m-Y', strtotime($patient['lmp']));
+               $date1 = date('d-m-Y', strtotime("$lmp + 126 day"));
+               $date2 = date('d-m-Y', strtotime("$lmp + 168 day"));
+               $date3 = date('d-m-Y', strtotime("$lmp + 238 day"));
+               //25 days before EDD.
+               $date4 = date('d-m-Y', strtotime("$lmp + 9 month"));
+               
                echo "
                <tr>
                <th scope='row'>$i</th>
                <td>" . $patient['name'] . "</td>
                <td>" . $patient['mobile'] . "</td>
                <td>" . $patient['aasha'] . "</td>
-               <td>" . $patient['lmp'] . "</td>
-               <td><input type='checkbox' class='checkup' name='ac0_".$i."' value='1' disabled checked data-id=".$patient['id']." data-field='ac0'/></td>
-               <td><input type='checkbox' class='checkup' name='ac1_".$i."' value='1' $ac1_checked data-id=".$patient['id']." data-field='ac1'/></td>
-               <td><input type='checkbox' class='checkup' name='ac2_".$i."' value='1' $ac2_checked data-id=".$patient['id']." data-field='ac2' /></td>
-               <td><input type='checkbox' class='checkup' name='ac3_".$i."' value='1' $ac3_checked data-id=".$patient['id']." data-field='ac3' /></td>
-               <td><input type='checkbox' class='checkup' name='delivery".$i."' value='1' $delivery_checked data-id=".$patient['id']." value='1'  data-field='delivery' /></td>
+               <td>" . $lmp . "</td>
+               <td><input type='checkbox' class='checkup' name='ac0_".$i."' value='1' disabled checked data-id=".$patient['id']." data-field='ac0'/>
+               <label>$lmp</label>
+               </td>
+               <td><input type='checkbox' class='checkup' name='ac1_".$i."' value='1' $ac1_checked data-id=".$patient['id']." data-field='ac1'/>
+               <label>$date1</label>
+               </td>
+               <td><input type='checkbox' class='checkup' name='ac2_".$i."' value='1' $ac2_checked data-id=".$patient['id']." data-field='ac2' />
+               <label>$date2</label>
+               </td>
+               <td><input type='checkbox' class='checkup' name='ac3_".$i."' value='1' $ac3_checked data-id=".$patient['id']." data-field='ac3' />
+               <label>$date3</label>
+               </td>
+               <td><input type='checkbox' class='checkup' name='delivery".$i."' value='1' $delivery_checked data-id=".$patient['id']." value='1'  data-field='delivery' />
+               <label>$date4</label>
+               </td>
                <td class='view-single-btn bi bi-pencil-square'><svg xmlns='http://www.w3.org/2000/svg' class='view-single-btn bi bi-pencil-square' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'  data-id='".$patient['id']."' viewBox='0 0 24 24' data-bs-toggle='modal' data-bs-target='#viewSinglePatient' aria-current='page'>
                <path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z'/>
                <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z'/>
@@ -264,7 +285,7 @@ include '../resources/sections/anm_menu.php';
       <!-- Model for Add Patients -->
       <div class="modal fade" id="addPatient" tabindex="-1" aria-labelledby="addPatientLabel" aria-hidden="true">
          <div class="modal-dialog">
-            <form method="POST" action="#" >
+            <form method="POST" action="#" id="addPatientForm" >
                <div class="modal-content">
                   <div class="modal-header">
                      <h5 class="modal-title" id="addPatientLabel">Add Patient Data</h5>
@@ -272,30 +293,30 @@ include '../resources/sections/anm_menu.php';
                   </div>
                   <div class="modal-body">
                      <div class="mb-3">
-                        <label for="name" id="name-label" class="form-label">Name</label>
+                        <label for="name" id="name-label" class="form-label">Name<span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="name" id="name" required>
                      </div>
                      <div class="mb-3">
-                        <label for="husband_name" id="husband_name-label" class="form-label">Husband Name</label>
+                        <label for="husband_name" id="husband_name-label" class="form-label">Husband Name <span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="husband_name" id="husband_name" required>
                      </div>
                      <div class="mb-3">
-                        <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number</label>
-                        <input type="number" class="form-control" name="aadhar" id="aadhar" required>
+                        <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number <span style="color:red">*</span></label>
+                        <input type="text" p="[0-9]{12}" maxlength="12"  min="0" max="999999999999"  step="1" class="form-control" name="aadhar" id="aadhar" required>
                         <small id="aadharError" style="display: none" class="form-text text-danger">Please Enter 12 Digit valid aadhar number.</small>
 
                      </div>
                      <div class="mb-3">
-                        <label for="mobile" id="mobile-label" class="form-label">Mobile Number</label>
-                        <input type="number" class="form-control" name="mobile" id="mobile" required>
+                        <label for="mobile" id="mobile-label" class="form-label">Mobile Number <span style="color:red">*</span></label>
+                        <input type="text" p="[0-9]{10}" maxlength="10"  min="0" max="9999999999"  step="1" class="form-control" name="mobile" id="mobile" required>
                         <small id="mobileError" style="display: none" class="form-text text-danger">Please Enter 10 Digit valid mobile number.</small>
                      </div>
                      <div class=" mb-3">
-                        <label for="address" id="address-label" class="form-label">Address</label>
+                        <label for="address" id="address-label" class="form-label">Address <span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="address" id="address" required>
                      </div>
                      <div class="mb-3">
-                        <label for="village" id="village-label" class="form-label">Village Name</label>
+                        <label for="village" id="village-label" class="form-label">Village Name <span style="color:red">*</span></label>
                         <select class="form-control form-select" name="village" id="village" required>
                            <option value="-1" selected disabled>Choose village</option>
                            <?php for ($i = 0; $i < count($village_list); $i++) {
@@ -305,23 +326,25 @@ include '../resources/sections/anm_menu.php';
                         </select>
                      </div>
                      <div class="mb-3">
-                        <label for="SCH" id="block-label" class="form-label">SHC Name</label>
+                        <label for="SCH" id="block-label" class="form-label">SHC Name <span style="color:red">*</span></label>
                         <input type="text" disabled value="<?= $SHC ?>" class="form-control" name="SHC" id="SHC" required>
                      </div>
                      <div class="mb-3">
-                        <label for="block" id="block-label" class="form-label">Block Name</label>
+                        <label for="block" id="block-label" class="form-label">Block Name<span style="color:red">*</span></label>
                         <input type="text" disabled value="<?= $block_name ?>" class="form-control" name="block" id="block" required>
                      </div>
                      <div class="mb-3">
-                        <label for="city" id="city-label" class="form-label">City</label>
+                        <label for="city" id="city-label" class="form-label">City<span style="color:red">*</span></label>
                         <input type="text" disabled value="<?= $city_name; ?>" class="form-control" name="city" id="city" required>
                      </div>
                      <div class="mb-3">
-                        <label for="aasha" id="aasha-label" class="form-label">Aasha</label>
-                        <input type="text" readonly class="form-control" name="aasha" id="aasha">
+                        <label for="select_aasha" id="aasha-label" class="form-label">Aasha<span style="color:red">*</span></label>
+                        <select name="aasha" required class="form-control form-select" id="select_aasha">
+                           <option value="-1" selected disabled>Select Aasha</option>
+                        </select>
                      </div>
                      <div class="mb-3">
-                        <label for="lmp" id="lmp-label" class="form-label">LMP</label>
+                        <label for="lmp" id="lmp-label" class="form-label">LMP<span style="color:red">*</span></label>
                         <input type="date" class="form-control" id="lmp" name="lmp" required>
                      </div>
                      <div class="mb-3">
@@ -414,30 +437,30 @@ include '../resources/sections/anm_menu.php';
                   </div>
                   <div class="modal-body">
                      <div class="mb-3">
-                        <label for="name" id="name-label" class="form-label">Name</label>
+                        <label for="name" id="name-label" class="form-label">Name<span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="e-name" id="e-name" required>
                         <input type="hidden" class="form-control" name="uid" id="uid" required>
                      </div>
                      <div class="mb-3">
-                        <label for="husband_name" id="husband_name-label" class="form-label">Husband Name</label>
+                        <label for="husband_name" id="husband_name-label" class="form-label">Husband Name<span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="e-husband_name" id="e-husband_name" required>
                      </div>
                      <div class="mb-3">
-                        <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number</label>
+                        <label for="aadhar" id="aadhar-label" class="form-label">Aadhar Number<span style="color:red">*</span></label>
                         <input type="number" class="form-control" name="e-aadhar" id="e-aadhar" required>
-                        <small id="e-aadharError" class="form-text text-danger">Please Enter 12 Digit valid aadhar number.</small>
+                        <small id="e-aadharError" style="display:none" class="form-text text-danger">Please Enter 12 Digit valid aadhar number.</small>
                      </div>
                      <div class="mb-3">
-                        <label for="mobile" id="mobile-label" class="form-label">Mobile Number</label>
+                        <label for="mobile" id="mobile-label" class="form-label">Mobile Number<span style="color:red">*</span></label>
                         <input type="number" class="form-control" name="e-mobile" id="e-mobile" required>
-                        <small id="e-mobileError" class="form-text text-danger">Please Enter 10 Digit valid mobile number.</small>
+                        <small id="e-mobileError" style="display:none" class="form-text text-danger">Please Enter 10 Digit valid mobile number.</small>
                      </div>
                      <div class=" mb-3">
-                        <label for="address" id="address-label" class="form-label">Address</label>
+                        <label for="address" id="address-label" class="form-label">Address<span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="e-address" id="e-address" required>
                      </div>
                      <div class="mb-3">
-                        <label for="village" id="village-label" class="form-label">Village Name</label>
+                        <label for="village" id="village-label" class="form-label">Village Name<span style="color:red">*</span></label>
                         <select class="form-control form-select" name="e-village" id="e-village" required>
                            <option value="-1" selected disabled>Choose village</option>
                            <?php for ($i = 0; $i < count($village_list); $i++) {
@@ -447,23 +470,25 @@ include '../resources/sections/anm_menu.php';
                         </select>
                      </div>
                      <div class="mb-3">
-                        <label for="SCH" id="block-label" class="form-label">SHC Name</label>
+                        <label for="SCH" id="block-label" class="form-label">SHC Name<span style="color:red">*</span></label>
                         <input type="text" disabled value="<?= $SHC ?>" class="form-control" name="e-SHC" id="e-SHC" required>
                      </div>
                      <div class="mb-3">
-                        <label for="block" id="block-label" class="form-label">Block Name</label>
+                        <label for="block" id="block-label" class="form-label">Block Name<span style="color:red">*</span></label>
                         <input type="text" disabled value="<?= $block_name ?>" class="form-control" name="e-block" id="e-block" required>
                      </div>
                      <div class="mb-3">
-                        <label for="city" id="city-label" class="form-label">City</label>
+                        <label for="city" id="city-label" class="form-label">City<span style="color:red">*</span></label>
                         <input type="text" disabled value="<?= $city_name; ?>" class="form-control" name="e-city" id="e-city" required>
                      </div>
                      <div class="mb-3">
-                        <label for="aasha" id="aasha-label" class="form-label">Aasha</label>
-                        <input type="text" readonly class="form-control"  name="e-aasha" id="e-aasha">
+                        <label for="aasha" id="e-aasha-label" class="form-label">Aasha<span style="color:red">*</span></label>
+                        <select name="e-aasha" required class="form-control form-select" id="e-aasha">
+                           <option value="-1" selected disabled>Select Aasha</option>
+                        </select>
                      </div>
                      <div class="mb-3">
-                        <label for="lmp" id="lmp-label" class="form-label">LMP</label>
+                        <label for="lmp" id="lmp-label" class="form-label">LMP<span style="color:red">*</span></label>
                         <input type="date" class="form-control" id="e-lmp" name="e-lmp" required>
                      </div>
                      <div class="mb-3"><b>
@@ -599,7 +624,7 @@ include '../resources/sections/anm_menu.php';
                      <input type="text" disabled value="<?= $city_name; ?>" class="form-control" name="v-city" id="v-city" required>
                   </div>
                   <div class="mb-3">
-                     <label for="aasha" class="form-label">Aasha</label>
+                     <label for="v-aasha" class="form-label">Aasha</label>
                      <input type="text" readonly class="form-control"  name="v-aasha" id="v-aasha">
                   </div>
                   <div class="mb-3">
@@ -687,198 +712,9 @@ include '../resources/sections/anm_menu.php';
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<script>const apiUrl = "<?=$apiUrl?>";</script>
+<script src="../resources/scripts/anm_panel.js"></script>
 
-<script>
-   $(document).ready( function () {
-      $.noConflict();
-    $('#view_patient_table').dataTable();
-   });
-   
-   const apiUrl="<?=$apiUrl?>";
-   $('#village').on('change', async () => {
-      const village = $('#village').find(":selected").text();
-      const resp = await fetch(`${apiUrl}?village=${village}`);
-      const resp_json = await resp.json();
-      console.log(resp_json);
-      if (resp_json.status === 200) {
-         $('#aasha').val(resp_json.name);
-      } else {
-         $('#aasha').val('');
-      }
-   });
-   $('#e-aadhar').on('input',  () => {
-      if($('#e-aadhar').val().length !== 12){
-         $('#e-aadharError').show();
-         $('#edit_patient').prop('disabled', true);
-      }
-      else{
-         $('#e-aadharError').hide();
-         $('#edit_patient').prop('disabled', false);
-      }
-   });
-   
-   $('#e-mobile').on('input',  () => {
-      if($('#e-mobile').val().length !== 10){
-         $('#e-mobileError').show();
-         $('#edit_patient').prop('disabled', true);
-      }
-      else{
-         $('#e-mobileError').hide();
-         $('#edit_patient').prop('disabled', false);
-      }
-   });
-   $('#aadhar').on('input',  () => {
-      if($('#aadhar').val().length !== 12){
-         $('#aadharError').show();
-         $('#add_patient').prop('disabled', true);
-      }
-      else{
-         $('#aadharError').hide();
-         $('#add_patient').prop('disabled', false);
-      }
-   });
-   
-   $('#mobile').on('input',  () => {
-      if($('#mobile').val().length !== 10){
-         $('#mobileError').show();
-         $('#add_patient').prop('disabled', true);
-      }
-      else{
-         $('#mobileError').hide();
-         $('#add_patient').prop('disabled', false);
-      }
-   });
-
-   $('#e-village').on('change', async () => {
-      const village = $('#e-village').find(":selected").text();
-      const resp = await fetch(`${apiUrl}?village=${village}`);
-      const resp_json = await resp.json();
-      console.log(resp_json);
-      if (resp_json.status === 200) {
-         $('#e-aasha').val(resp_json.name);
-      } else {
-         $('#e-aasha').val('');
-      }
-   });
-   
-   $( "body" ).on( "click", ".edit-btn", function() {
-      let id=$('#editPatientBtn').attr('data-id');
-      console.log(id);
-      $.ajax({ 
-         url:apiUrl+`?id=${id}`,
-         type: "GET",
-         success : function(res){
-            const data=JSON.parse(res).data;
-            console.log(data);
-            $('#e-name').val(data.name);
-            $('#e-husband_name').val(data.husband_name);
-            $('#e-aadhar').val(data.aadhar);
-            $('#e-mobile').val(data.mobile);
-            $('#e-address').val(data.address);
-            $('#e-village').val(data.village);
-            $('#e-lmp').val(data.lmp);
-            $('#uid').val(data.id);
-            $('#e-aasha').val(data.aasha);
-            
-            data.APH == 1 ? $('#e-aph').attr('checked', 'checked') :  $('#e-APH').prop('checked', false);
-            data.eclampsia == 1 ? $('#e-Eclampsia').attr('checked', 'checked') :  $('#e-Eclampsia').prop('checked', false);
-            data.PIH == 1 ? $('#e-PIH').attr('checked', 'checked') :  $('#e-PIH').prop('checked', false);
-            data.anaemia == 1 ? $('#e-Anaemia').attr('checked', 'checked') :  $('#e-Anaemia').prop('checked', false);
-            data.obstructed_labor == 1 ? $('#e-Obstructed_Labor').attr('checked', 'checked') :  $('#e-Obstructed_Labor').prop('checked', false);
-            data.PPH == 1 ? $('#e-PPH').attr('checked', 'checked') :  $('#e-PPH').prop('checked', false);
-            data.LSCS == 1 ? $('#e-LSCS').attr('checked', 'checked') :  $('#e-LSCS').prop('checked', false);
-            data.congenital_anamaly == 1 ? $('#e-Congenital_Anamaly').attr('checked', 'checked') :  $('#e-Congenital_Anamaly').prop('checked', false);
-            data.abortion == 1 ? $('#e-Abortion').attr('checked', 'checked') :  $('#e-Abortion').prop('checked', false);
-            data.others_1 == 1 ? $('#e-Others').attr('checked', 'checked') :  $('#e-Others').prop('checked', false);
-            data.tuberculosis == 1 ? $('#e-Tuberculosis').attr('checked', 'checked') :  $('#e-Tuberculosis').prop('checked', false);
-            data.hypertension == 1 ? $('#e-Hypertension').attr('checked', 'checked') :  $('#e-Hypertension').prop('checked', false);
-            data.heart_disease == 1 ? $('#e-Heart_Disease').attr('checked', 'checked') :  $('#e-Heart_Disease').prop('checked', false);
-            data.diabetes == 1 ? $('#e-Diabetes').attr('checked', 'checked') :  $('#e-Diabetes').prop('checked', false);
-            data.asthma == 1 ? $('#e-Asthma').attr('checked', 'checked') :  $('#e-Asthma').prop('checked', false);
-            data.other_2 == 1 ? $('#e-Other').attr('checked', 'checked') :  $('#e-Other').prop('checked', false);
-
-
-         }
-      });
-
-   });
-   $( "body" ).on( "click", ".view-single-btn", function() {
-      const id=$(this).attr('data-id');
-      $('#editPatientBtn').attr('data-id',id); 
-
-      $.ajax({ 
-         url:apiUrl+`?id=${id}`,
-         type: "GET",
-         success : function(res){
-            const data=JSON.parse(res).data;
-            $('#v-name').val(data.name);
-            $('#v-husband_name').val(data.husband_name);
-            $('#v-aadhar').val(data.aadhar);
-            $('#v-mobile').val(data.mobile);
-            $('#v-address').val(data.address);
-            $('#v-village').val(data.village);
-            $('#v-lmp').val(data.lmp);
-            $('#v-aasha').val(data.aasha);
-            
-      
-            data.APH == 1 ? $('#v-aph').attr('checked', 'checked') :  $('#v-APH').prop('checked', false);
-            data.eclampsia == 1 ? $('#v-Eclampsia').attr('checked', 'checked') :  $('#v-Eclampsia').prop('checked', false);
-            data.PIH == 1 ? $('#v-PIH').attr('checked', 'checked') :  $('#v-PIH').prop('checked', false);
-            data.anaemia == 1 ? $('#v-Anaemia').attr('checked', 'checked') :  $('#v-Anaemia').prop('checked', false);
-            data.obstructed_labor == 1 ? $('#v-Obstructed_Labor').attr('checked', 'checked') :  $('#v-Obstructed_Labor').prop('checked', false);
-            data.PPH == 1 ? $('#v-PPH').attr('checked', 'checked') :  $('#v-PPH').prop('checked', false);
-            data.LSCS == 1 ? $('#v-LSCS').attr('checked', 'checked') :  $('#v-LSCS').prop('checked', false);
-            data.congenital_anamaly == 1 ? $('#v-Congenital_Anamaly').attr('checked', 'checked') :  $('#v-Congenital_Anamaly').prop('checked', false);
-            data.abortion == 1 ? $('#v-Abortion').attr('checked', 'checked') :  $('#v-Abortion').prop('checked', false);
-            data.others_1 == 1 ? $('#v-Others').attr('checked', 'checked') :  $('#v-Others').prop('checked', false);
-            data.tuberculosis == 1 ? $('#v-Tuberculosis').attr('checked', 'checked') :  $('#v-Tuberculosis').prop('checked', false);
-            data.hypertension == 1 ? $('#v-Hypertension').attr('checked', 'checked') :  $('#v-Hypertension').prop('checked', false);
-            data.heart_disease == 1 ? $('#v-Heart_Disease').attr('checked', 'checked') :  $('#v-Heart_Disease').prop('checked', false);
-            data.diabetes == 1 ? $('#v-Diabetes').attr('checked', 'checked') :  $('#v-Diabetes').prop('checked', false);
-            data.asthma == 1 ? $('#v-Asthma').attr('checked', 'checked') :  $('#v-Asthma').prop('checked', false);
-            data.other_2 == 1 ? $('#v-Other').attr('checked', 'checked') :  $('#v-Other').prop('checked', false);
-
-
-
-         }
-      });
-
-   });
-   $( "body" ).on( "click", "#export_data", function() {
-      var from=$('#from').val();
-      var to=$('#to').val();
-      if(!to || !from){
-         $('#export_error').show();
-         setTimeout(5000,()=>{
-            $('#export_error').hide();
-         });
-         return false;
-      }
-      else{
-         window.open(`export.php?from=${from}&to=${to}`,'_blank');
-      }
-   });
-   $( "body" ).on( "click", ".checkup", function() {
-      const id = $(this).attr('data-id'); 
-      const field = $(this).attr('data-field');
-      const value=$(this).is(":checked") ? 1 :0;
-      console.log(id,field,value);
-      const formData ={id,field,value};
-      $.ajax({ 
-         url:apiUrl,
-         type: "POST",
-         data:formData,
-         success : function(res){
-            console.log(res);
-         }
-      });
-   });
-
-   // for preventing relsubmissions of from
-   if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-</script>
 <?php
 include '../resources/sections/footer.php';
 ?>

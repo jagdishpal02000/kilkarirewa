@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2022 at 05:21 AM
+-- Generation Time: Sep 18, 2022 at 06:04 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -561,7 +561,8 @@ INSERT INTO `aasha` (`id`, `name`, `mobile`, `email`, `village`) VALUES
 (520, 'SANTOSH PANDEY', '8819844146', 'aasha520@kilkarirewa.in', 'DADAR'),
 (521, 'REENA DEVI', '9457617403', 'aasha521@kilkarirewa.in', 'BIDWA'),
 (522, 'KRISHANAVATI PANDEY', '8964854627', 'aasha522@kilkarirewa.in', 'PAIPAKHARA'),
-(523, 'SWATI SHUKLA', '8120975889', 'aasha523@kilkarirewa.in', 'BARWAH');
+(523, 'SWATI SHUKLA', '8120975889', 'aasha523@kilkarirewa.in', 'BARWAH'),
+(524, 'test mul aasha 2', '7023434567', 'testma2', 'HARDI');
 
 -- --------------------------------------------------------
 
@@ -3713,25 +3714,41 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`id`, `name`, `husband_name`, `aadhar`, `village`, `mobile`, `block`, `SHC`, `city`, `aasha`, `lmp`, `APH`, `eclampsia`, `PIH`, `anaemia`, `obstructed_labor`, `PPH`, `LSCS`, `congenital_anamaly`, `abortion`, `others_1`, `tuberculosis`, `hypertension`, `heart_disease`, `diabetes`, `asthma`, `other_2`, `address`, `ac1`, `ac2`, `ac3`, `delivery`) VALUES
-(1, 'Nirmala Kol', 'Rajbahor Kol', '20222893042', 'Purwa', '9981890839', 'Gangev', '', 'Rewa', 'Sona Patel', '2022-01-27', 1, 0, 1, 0, 0, 1, 1, 0, 1, '0', 1, 0, 1, 1, 0, '1', 'Purwa', 1, 0, 0, 0),
-(2, 'Meeta Wishkarma', 'Satendra Wishkarma', '20219463117', 'Kon', '9302200718', 'Hanumana', '', 'Rewa', 'Geeta Upadhye', '2022-01-31', 1, 0, 0, 0, 0, 0, 0, 1, 0, '0', 1, 0, 1, 0, 0, '0', 'Kon', 1, 1, 1, 0),
-(3, 'Vimla Saket', 'Sanjit Saket', '20222717813', 'Katangi', '9516808659', 'Jawa', '', 'Rewa', 'Anita Mishra', '2022-03-10', 0, 1, 1, 0, 0, 0, 1, 1, 0, '0', 0, 1, 0, 1, 1, '0', 'Katangi', 0, 0, 0, 0),
-(4, 'Sangeeta Yadau', 'Munash Vadav', '23141855059', 'Gadhawa', '7722895286', 'Mauganj', '', 'Rewa', 'Geetavati Shukla', '2021-09-11', 0, 0, 1, 0, 1, 1, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'Gadhawa', 0, 0, 0, 0),
-(5, 'Davtee Dahiya', 'Gevanlal Daheya', '20213577822', 'Bahati', '8103850159', 'Naigarhi', '', 'Rewa', 'Kalavati Khushwaha', '2021-12-18', 1, 0, 0, 1, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 1, '1', 'Bahati', 0, 0, 0, 0),
-(6, 'Rinkee Pathak', 'Anshbrat Pathak', '20225993437', 'Joginhai', '7999639983', 'Raipur Karchuliyan', '', 'Rewa', 'Anita Singh', '2021-11-27', 1, 1, 0, 1, 1, 0, 0, 0, 0, '1', 0, 1, 1, 1, 0, '0', 'Joginhai', 0, 0, 0, 0),
-(7, 'Sanju Pal', 'Harbhajan Pal', '20221418287', 'Silpara', '9522292755', 'Rewa', '', 'Rewa', 'Sita Singh Chandel', '2022-02-05', 0, 0, 0, 0, 0, 0, 0, 1, 0, '0', 0, 0, 0, 0, 0, '0', 'Silpara', 0, 0, 0, 0),
-(8, 'Vidyavati Dwivedi', 'Shivendra Prasad Dwivedi', '20226311471', 'Tilkhan', '9098244976', 'Sirmaur', '', 'Rewa', 'Kiran Singh', '2022-02-25', 0, 1, 1, 0, 0, 0, 1, 1, 0, '0', 0, 1, 0, 1, 1, '0', 'Tilkhan', 0, 0, 0, 0),
-(9, 'Anju Saket', 'Baland Saket', '20211047762', 'Naubasta', '7869636954', 'Teonthar', '', 'Rewa', 'Rekha Pandey', '2021-08-22', 0, 0, 1, 0, 1, 1, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'Naubasta', 0, 0, 0, 0),
-(10, 'Renu', 'kol', '987646757364', 'Agdal', '9424468702', 'Gangev', '', 'Rewa', '', '2022-04-08', 1, 0, 0, 0, 0, 0, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'Rewa', 0, 0, 0, 0),
-(24, 'ab', 'cd', '123443211234', 'CHAURI', '1234567890', 'Gangeo', '', 'rewa', '', '2022-06-23', 0, 1, 0, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'somwhere', 0, 0, 0, 0),
-(26, 'k', 'k', '111122223333', 'MANDHIKURD', '1122334455', 'Gangeo', '', 'rewa', '', '2022-06-23', 0, 1, 0, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'q1', 0, 0, 0, 0),
-(28, 'uiy', 'B', '123456789012', 'BADOKHAR', '0987654322', 'Gangeo', 'AGDAL', 'rewa', 'KAMLESH KUMARI UPADHYA', '2022-07-01', 0, 0, 1, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'ADD', 1, 1, 1, 1),
-(29, 'q', 'w', '909090909090', 'MISIRA', '9898898989', 'Gangeo', 'AGDAL', 'rewa', 'MEENA SINGH', '2022-07-22', 1, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'q', 0, 0, 0, 0),
-(30, 'radha', 'syam', '122112121221', 'GAMBHIRPUR', '1223124374', 'Gangeo', 'AGDAL', 'rewa', 'MALA PATEL', '2022-07-13', 1, 0, 0, 0, 0, 0, 0, 0, 0, '0', 1, 0, 0, 0, 0, '0', 'addr', 0, 0, 1, 1),
-(32, 'aa', 'adf', '32', 'AGDAL', '234', 'Gangeo', 'AGDAL', 'rewa', 'SUNEETA MISHRA', '2022-06-28', 1, 0, 0, 0, 0, 1, 0, 0, 0, '1', 0, 0, 1, 0, 0, '0', 'sadf', 1, 0, 0, 0),
-(36, 'aaE', 'adf', '32332', 'KATHMANA', '23423', 'Gangeo', 'AGDAL', 'rewa', 'VIMLA PANDEY', '2022-06-28', 1, 0, 0, 0, 0, 1, 0, 0, 0, '1', 0, 0, 1, 0, 0, '0', 'sadf', 1, 0, 1, 0),
-(38, 'name', 'hname', '3456278393', 'SENDHA', '237746', 'Gangeo', 'AGDAL', 'rewa', 'SUNEETA SINGH', '2022-07-25', 1, 0, 0, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'near you', 0, 0, 1, 1),
-(39, 'hi', 'hN', '234375839327', 'MISIRA', '8798675654', 'Gangeo', 'AGDAL', 'rewa', 'MEENA SINGH', '2022-07-21', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 1, '1', 'near rec', 0, 0, 0, 0);
+(1, 'Nirmala Kol', 'Rajbahor Kol', '20222893042', 'AKALSHI', '9981890839', 'Gangev', 'Dewas', 'Rewa', 'Sona Patel', '2022-03-20', 1, 0, 1, 0, 0, 1, 1, 0, 1, '0', 1, 0, 1, 1, 0, '1', 'Purwa', 0, 0, 0, 0),
+(2, 'Meeta Wishkarma', 'Satendra Wishkarma', '20219463117', 'AMILIYA', '9302200718', 'Hanumana', 'Dewas', 'Rewa', 'Geeta Upadhye', '2022-03-20', 1, 0, 0, 0, 0, 0, 0, 1, 0, '0', 1, 0, 1, 0, 0, '0', 'Kon', 0, 1, 1, 0),
+(3, 'Vimla Saket', 'Sanjit Saket', '20222717813', 'BADIAUR', '9516808659', 'Jawa', 'Dewas', 'Rewa', 'Anita Mishra', '2022-03-13', 0, 1, 1, 0, 0, 0, 1, 1, 0, '0', 0, 1, 0, 1, 1, '0', 'Katangi', 0, 0, 0, 0),
+(4, 'Sangeeta Yadau', 'Munash Vadav', '23141855059', 'BADOKHAR', '7722895286', 'Mauganj', 'Dewas', 'Rewa', 'Geetavati Shukla', '2022-03-13', 0, 0, 1, 0, 1, 1, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'Gadhawa', 0, 0, 0, 0),
+(5, 'Davtee Dahiya', 'Gevanlal Daheya', '20213577822', 'BAMHNI', '8103850159', 'Naigarhi', 'Jaraha', 'Rewa', 'Kalavati Khushwaha', '2022-03-06', 1, 0, 0, 1, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 1, '1', 'Bahati', 0, 0, 0, 0),
+(6, 'Rinkee Pathak', 'Anshbrat Pathak', '20225993437', 'BHAMARIYA', '7999639983', 'Raipur Karchuliyan', 'Jaraha', 'Rewa', 'Anita Singh', '2022-03-06', 1, 1, 0, 1, 1, 0, 0, 0, 0, '1', 0, 1, 1, 1, 0, '0', 'Joginhai', 0, 0, 0, 0),
+(7, 'Sanju Pal', 'Harbhajan Pal', '20221418287', 'BHAMARIYA', '9522292755', 'Rewa', 'Jaraha', 'Rewa', 'Sita Singh Chandel', '2022-02-06', 0, 0, 0, 0, 0, 0, 0, 1, 0, '0', 0, 0, 0, 0, 0, '0', 'Silpara', 0, 0, 0, 0),
+(8, 'Vidyavati Dwivedi', 'Shivendra Prasad Dwivedi', '20226311471', 'BHAMARIYA', '9098244976', 'Sirmaur', 'Jaraha', 'Rewa', 'Kiran Singh', '2022-02-06', 0, 1, 1, 0, 0, 0, 1, 1, 0, '0', 0, 1, 0, 1, 1, '0', 'Tilkhan', 0, 0, 0, 0),
+(9, 'Anju Saket', 'Baland Saket', '20211047762', 'BHAMARIYA', '7869636954', 'Teonthar', 'Jaraha', 'Rewa', 'Rekha Pandey', '2022-01-30', 0, 0, 1, 0, 1, 1, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'Naubasta', 0, 0, 0, 0),
+(10, 'Renu', 'kol', '987646757364', 'BHAMARIYA', '9424468702', 'Gangev', 'Jaraha', 'Rewa', '', '2022-01-30', 1, 0, 0, 0, 0, 0, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'Rewa', 0, 0, 0, 0),
+(24, 'ab', 'cd', '123443211234', 'BHAMARIYA', '1234567890', 'Gangeo', 'Jaraha', 'rewa', '', '2022-01-23', 0, 1, 0, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'somwhere', 0, 0, 0, 0),
+(26, 'k', 'k', '111122223333', 'MANDHIKURD', '1122334455', 'Gangeo', 'Jaraha', 'rewa', '', '2022-01-23', 0, 1, 0, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'q1', 0, 0, 0, 0),
+(28, 'edit', 'B', '123456789012', 'BADOKHAR', '0987654322', 'Gangeo', 'AGDAL', 'rewa', 'KAMLESH KUMARI UPADHYA', '2021-11-28', 1, 1, 1, 1, 1, 1, 1, 1, 1, '1', 1, 1, 1, 1, 1, '1', 'ADD', 1, 1, 1, 1),
+(29, 'q', 'w', '909090909090', 'CHIYAR', '9898898989', 'Gangeo', 'AGDAL', 'rewa', 'MEENA SINGH', '2021-11-28', 1, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'q', 1, 1, 1, 0),
+(30, 'radha', 'syam', '122112121221', 'GAMBHIRPUR', '1223124374', 'Gangeo', 'AGDAL', 'rewa', 'MALA PATEL', '2021-11-21', 1, 0, 0, 0, 0, 0, 0, 0, 0, '0', 1, 0, 0, 0, 0, '0', 'addr', 1, 0, 1, 1),
+(32, 'aa', 'adf', '32', 'AGDAL', '234', 'Gangeo', 'AGDAL', 'rewa', 'SUNEETA MISHRA', '2021-11-21', 1, 0, 0, 0, 0, 1, 0, 0, 0, '1', 0, 0, 1, 0, 0, '0', 'sadf', 1, 1, 0, 1),
+(36, 'aaE', 'adf', '32332', 'KATHMANA', '23423', 'Gangeo', 'AGDAL', 'rewa', 'VIMLA PANDEY', '2021-11-14', 1, 0, 0, 0, 0, 1, 0, 0, 0, '1', 0, 0, 1, 0, 0, '0', 'sadf', 1, 0, 1, 1),
+(38, 'name', 'hname', '3456278393', 'SENDHA', '237746', 'Gangeo', 'AGDAL', 'rewa', 'SUNEETA SINGH', '2021-11-14', 1, 0, 0, 0, 0, 1, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'near you', 1, 1, 1, 1),
+(39, 'hi', 'hN', '234375839327', 'MISIRA', '8798675654', 'Gangeo', 'AGDAL', 'rewa', 'MEENA SINGH', '2021-11-14', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 1, '1', 'near rec', 1, 0, 0, 0),
+(40, 'ankita', 'ankit', '574838938330', 'AKALSHI', '3894847383', 'Gangeo', 'AGDAL', 'rewa', 'SAROJ SEN', '2022-09-01', 1, 0, 1, 1, 0, 0, 0, 0, 0, '1', 0, 1, 0, 1, 0, '0', 'Somewhere in earth', 1, 1, 0, 0),
+(41, 'a', 'b', '859595959595', 'DEWAS', '7898789878', 'Gangeo', 'Phool', 'rewa', 'ANITA DEVI PATEL', '2022-08-30', 0, 0, 0, 0, 0, 0, 1, 1, 0, '0', 0, 1, 0, 0, 1, '0', 'address', 0, 0, 0, 0),
+(42, 'test', 'test', '585758958585', 'ANTRAILA', '8575857585', 'Gangeo', 'Phool', 'rewa', 'SEEMA TRIPATHI', '2022-09-22', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'j', 0, 0, 0, 0),
+(45, 'yu', 'yu', '789878987878', 'AGDAL', '7887788778', 'Gangeo', 'AGDAL', 'rewa', 'SUNEETA MISHRA', '2022-09-23', 0, 0, 0, 0, 0, 0, 1, 0, 0, '0', 0, 0, 0, 0, 0, '1', 'yh', 0, 0, 0, 0),
+(46, 'yt', 'yt', '678767878978', 'AGDAL', '6787668767', 'Gangeo', 'AGDAL', 'rewa', 'SUNEETA MISHRA', '2022-09-09', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'yg', 0, 0, 0, 0),
+(47, 'add me', 'hu', '789867878989', 'CHIYAR', '7898789867', 'Gangeo', 'AGDAL', 'rewa', 'GEETA VISHWKARMA', '2022-09-22', 0, 1, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '1', 'uionhi', 1, 0, 0, 0),
+(48, 'roushni', 'roushan', '413744575870', 'MAUHARIYA KOTHAR', '7024964170', 'Gangeo', 'Akauri', 'rewa', 'KALPNA TIWARI', '2022-01-01', 0, 0, 0, 0, 1, 0, 0, 0, 1, '0', 0, 0, 1, 1, 0, '0', 'Near somewhere', 0, 0, 0, 1),
+(50, 'test name 1501', 'test hus', '675676869545', 'AKAURI UNMOOLAN', '7024964171', 'Gangeo', 'Akauri', 'rewa', 'MANEESHA RAWAT', '2022-05-12', 0, 1, 0, 0, 0, 0, 0, 0, 0, '1', 0, 0, 0, 1, 0, '0', ' ea', 0, 0, 0, 0),
+(51, 'Reet', 'test hus', '674893027248', 'MAUHARIYA UNMOOLAN', '6266468998', 'Gangeo', 'Akauri', 'rewa', 'MADHU TIWARI', '2022-03-31', 0, 0, 0, 0, 0, 0, 0, 1, 0, '0', 0, 1, 0, 0, 0, '0', 'nj', 0, 0, 0, 0),
+(53, 'test patient 1503', 'name', '847363940382', 'BADOKHAR', '9131893739', 'Gangeo', 'Akauri', 'rewa', 'KAMLESH KUMARI UPADHYA', '2022-01-20', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'jhjk', 0, 0, 0, 0),
+(54, 'srishti', 'osad', '847484937537', 'BADOKHAR', '3434343434', 'Gangeo', 'Akauri', 'rewa', 'KAMLESH KUMARI UPADHYA', '2022-01-09', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'ajfklj', 0, 0, 0, 0),
+(55, 'mul aasha check', 'dad', '786787678767', 'HARDI', '7867876787', 'Gangeo', 'Akauri', 'rewa', '', '2022-09-20', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'jasjk', 0, 0, 0, 0),
+(56, 'mul aasha check 3', 'kadlj', '786787578678', 'HARDI', '7656766787', 'Gangeo', 'Akauri', 'rewa', 'test mul aasha 2', '2022-09-29', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'daklj', 0, 0, 0, 0),
+(58, 'test patient 1803', 'patidev', '785794781209', 'PACHOKHAR', '9856762497', 'Gangeo', 'Akauri', 'rewa', '', '2022-01-21', 0, 0, 0, 0, 0, 0, 0, 0, 0, '0', 0, 0, 0, 0, 0, '0', 'near nature', 0, 0, 0, 0),
+(59, 'test patient 1804', 'olpun', '756478389324', 'KARAH', '8302675844', 'Gangeo', 'Akauri', 'rewa', '', '2022-01-22', 1, 1, 0, 0, 1, 0, 0, 0, 0, '0', 1, 0, 0, 0, 0, '1', 'hiiii add', 0, 0, 0, 0),
+(60, 'asfa', 'fa', '344523542345', 'AKAURI UNMOOLAN', '4124124312', 'Gangeo', 'Akauri', 'rewa', 'MANEESHA RAWAT', '2022-08-31', 0, 0, 0, 0, 0, 0, 0, 0, 1, '0', 0, 0, 0, 0, 0, '0', 'adfasf', 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -3771,7 +3788,7 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `aasha`
 --
 ALTER TABLE `aasha`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=524;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=525;
 
 --
 -- AUTO_INCREMENT for table `anm`
@@ -3789,7 +3806,7 @@ ALTER TABLE `blocks`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,13 +1,16 @@
 <?php
-   include '../resources/core/config.php';
+   require('../resources/functions/config.php');
    session_start();
+   if(!isset($_SESSION['type']) || $_SESSION['type'] !='patient') header('location:../index.php');
+
    $patient_data = $_SESSION["patient_data"];
-   $name = $patient_data["name"];
+   $name = $patient_data["name"];   
    $lmp = $patient_data['lmp'];
-   $date1 = date('Y-m-d', strtotime("$lmp + 84 day"));
-   $date2 = date('Y-m-d', strtotime("$lmp + 126 day"));
-   $date3 = date('Y-m-d', strtotime("$lmp + 168 day"));
-   $date4 = date('Y-m-d', strtotime("$lmp + 238 day"));
+   $date1 = date('Y-m-d', strtotime("$lmp + 126 day"));
+   $date2 = date('Y-m-d', strtotime("$lmp + 168 day"));
+   $date3 = date('Y-m-d', strtotime("$lmp + 238 day"));
+   //25 days before EDD. if edd is 9 months and 7 days ==> 280 days.
+   $date4 = date('Y-m-d', strtotime("$lmp + 9 month"));
    $aasha = $patient_data["aasha"];
    ?>
 <?php

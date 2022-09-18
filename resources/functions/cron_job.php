@@ -1,36 +1,34 @@
 <?php
 include('helpers.php');
     $today=date("Y/m/d");  
-    $edd = date('Y-m-d', strtotime("$today - 9 month - 25 day"));
-die($edd);
+
+   $edd = date('Y-m-d', strtotime("$today - 9 month"));
     // patient
    $date1_ac1 = date('Y-m-d', strtotime("$today - 126 day"));
    $date2_ac1 = date('Y-m-d', strtotime("$today - 133 day"));
    $date3_ac1 = date('Y-m-d', strtotime("$today - 140 day"));
+
    $date1_ac2 = date('Y-m-d', strtotime("$today - 168 day"));
    $date2_ac2 = date('Y-m-d', strtotime("$today - 175 day"));
    $date3_ac2 = date('Y-m-d', strtotime("$today - 182 day"));
+
    $date1_ac3 = date('Y-m-d', strtotime("$today - 238 day"));
    $date2_ac3 = date('Y-m-d', strtotime("$today - 245 day"));
    $date3_ac3 = date('Y-m-d', strtotime("$today - 252 day"));
 
-   $date1_edd_1 = date('Y-m-d', strtotime("$today - 9 month - 25 day"));
-   $date1_edd_2 = date('Y-m-d', strtotime("$today - 9 month - 18 day"));
-   $date1_edd_3 = date('Y-m-d', strtotime("$today - 9 month - 11 day"));
-
-//    echo $date1_ac1."  ".$date2_ac1."  ".$date3_ac1."  ".$date1_ac2."  ".$date2_ac2."  ".$date3_ac2."  ".$date1_ac3."  ".$date2_ac3."  ".$date3_ac3."  ";
-// 1. patient
-// 2. aasha
-// 3. anm
-
+   $date1_edd_1 = date('Y-m-d', strtotime("$today - 9 month + 25 day"));
+   $date1_edd_2 = date('Y-m-d', strtotime("$today - 9 month + 18 day"));
+   $date1_edd_3 = date('Y-m-d', strtotime("$today - 9 month + 11 day"));
 
 
 $date1_ac1_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date1_ac1' and ac1=0  ";
 $date2_ac1_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date2_ac1' and ac1=0  ";
 $date3_ac1_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date3_ac1' and ac1=0  ";
+
 $date1_ac2_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date1_ac2' and ac2=0  ";
 $date2_ac2_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date2_ac2' and ac2=0  ";
 $date3_ac2_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date3_ac2' and ac2=0  ";
+
 $date1_ac3_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date1_ac3' and ac3=0  ";
 $date2_ac3_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date2_ac3' and ac3=0  ";
 $date3_ac3_query = "SELECT p.name as name ,p.mobile as mobile, p.aasha as aasha, p.SHC as SHC, p.lmp as lmp,a.name as anm_name, a.mobile as anm_mobile,a.email as anm_email,aasha.mobile as aasha_mobile,aasha.email as aasha_email, aasha.name as aasha_name FROM patient p INNER JOIN anm a ON a.SHC =p.SHC  INNER JOIN aasha ON p.village = aasha.village where lmp= '$date3_ac3' and ac3=0  ";
@@ -46,24 +44,26 @@ $date1_edd_1_res = mysqli_fetch_all($date1_edd_1_temp, MYSQLI_ASSOC);
 for($i=0;$i<count($date1_edd_1_res);$i++){
     $date1_edd_1_res[$i]['msg_to']="patient";
     $date1_edd_1_res[$i]['type']="4";
-    $date1_edd_1_res[$i]['edd']=date('Y-m-d', strtotime("$date1_edd_1_res[$i]['lmp'] + 9 month"));
-    
+    $lmp=$date1_edd_1_res[$i]['lmp'];
+    $date1_edd_1_res[$i]['edd']=date('d-m-Y', strtotime("$lmp + 9 month"));
     array_push($patiet_data,$date1_edd_1_res[$i]);
 }
 $date1_edd_2_temp = mysqli_query($conn, $date1_edd_2_query);
 $date1_edd_2_res = mysqli_fetch_all($date1_edd_2_temp, MYSQLI_ASSOC);
 for($i=0;$i<count($date1_edd_2_res);$i++){
-    $date1_edd_2_res[$i]['msg_to']="patient";
+    $date1_edd_2_res[$i]['msg_to']="aasha";
     $date1_edd_2_res[$i]['type']="4";
-    $date1_edd_2_res[$i]['edd']=date('Y-m-d', strtotime("$date1_edd_1_res[$i]['lmp'] + 9 month"));
+    $lmp=$date1_edd_1_res[$i]['lmp'];
+    $date1_edd_1_res[$i]['edd']=date('d-m-Y', strtotime("$lmp + 9 month"));
     array_push($patiet_data,$date1_edd_2_res[$i]);
 }
 $date1_edd_3_temp = mysqli_query($conn, $date1_edd_3_query);
 $date1_edd_3_res = mysqli_fetch_all($date1_edd_3_temp, MYSQLI_ASSOC);
 for($i=0;$i<count($date1_edd_3_res);$i++){
-    $date1_edd_3_res[$i]['msg_to']="patient";
+    $date1_edd_3_res[$i]['msg_to']="anm";
     $date1_edd_3_res[$i]['type']="4";
-    $date1_edd_3_res[$i]['edd']=date('Y-m-d', strtotime("$date1_edd_1_res[$i]['lmp'] + 9 month"));
+    $lmp=$date1_edd_1_res[$i]['lmp'];
+    $date1_edd_1_res[$i]['edd']=date('d-m-Y', strtotime("$lmp + 9 month"));
     array_push($patiet_data,$date1_edd_3_res[$i]);
 }
 
@@ -147,28 +147,37 @@ $aasha_mobile = $patiet_data[$i]['aasha_mobile'];
 $aasha_name = $patiet_data[$i]['aasha_name'];
 $msg_to=$patiet_data[$i]['msg_to'];
 $type=$patiet_data[$i]['type'];
+$edd=$patiet_data[$i]['edd'] ?? "";
 
 
-$patient_message_1 = "श्रीमती $patient_name, आप के द्वितीय गर्भावस्था जांच हेतु $anm_name,  ($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे।";
-$anm_message_1 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की द्वितीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे।";
+
+
+
+
+$patient_message_1 = "श्रीमती $patient_name, आप के द्वितीय गर्भावस्था जांच हेतु $anm_name,($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$anm_message_1 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की द्वितीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
 $aasha_message_1 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की द्वितीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे।";
 
-$patient_message_2 = "श्रीमती $patient_name, आप के तृतीय गर्भावस्था जांच हेतु $anm_name,  ($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे।";
-$anm_message_2 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की तृतीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे।";
-$aasha_message_2 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की तृतीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे।";
-
-$patient_message_3 = "श्रीमती $patient_name, आप के चतुर्थ  गर्भावस्था जांच हेतु $anm_name,  ($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे।";
-$anm_message_3 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की चतुर्थ  गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे।";
-$aasha_message_3 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की चतुर्थ  गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे।";
+$patient_message_2 = "श्रीमती $patient_name, आप के तृतीय गर्भावस्था जांच हेतु $anm_name,($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$anm_message_2 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की तृतीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$aasha_message_2 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की तृतीय गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
 
 
-$patient_message_edd_1 = "श्रीमती $patient_name, आपकी प्रसव की अनुमानित तिथि {#EDD#}) है जांच हेतु {#ANMNAME#} ({#ANMMOBILE#}) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे।";
-$anm_message_edd_2 = "आपके गांव की गर्भवती महिला श्रीमति {#PNAME#} की प्रसव की अनुमानित तिथि {#EDD#}) है। कृपया तत्काल जांच करांवे।";
-$aasha_message_edd_3 = "श्रीमती {#PNAME#}, आपकी प्रसव की अनुमानित तिथि {#EDD#}) है जांच हेतु {#ANMNAME#} ({#ANMMOBILE#}) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे।";
+
+$patient_message_3 = "श्रीमती $patient_name, आप के चतुर्थ गर्भावस्था जांच हेतु $anm_name,($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$anm_message_3 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की चतुर्थ गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$aasha_message_3 =  "आपके गांव की गर्भवती महिला श्रीमति $patient_name की चतुर्थ गर्भावस्था जांच का समय पूर्ण है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+
+
+
+$patient_message_edd_1 = "श्रीमती $patient_name, आपकी प्रसव की अनुमानित तिथि $edd है जांच हेतु $anm_name,($anm_mobile) से संपर्क कर अथवा नजदीकी स्वास्थ्य केन्द्र में जाकर तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$anm_message_edd_2 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की प्रसव की अनुमानित तिथि $edd है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
+$aasha_message_edd_3 = "आपके गांव की गर्भवती महिला श्रीमति $patient_name की प्रसव की अनुमानित तिथि $edd है। कृपया तत्काल जांच करांवे। Kilkari (CMHO, Rewa) - Velvish";
 
 
 $mobile =""; 
 $message = "";
+$template_id="";
 
 switch ($type){
     case '1' :
@@ -176,14 +185,17 @@ switch ($type){
             case 'patient':
                 $mobile =$patient_mobile; 
                 $message = $patient_message_1;
+                $template_id=$CheckupReminderTempId;
                 break;
             case 'aasha':
                 $mobile =$aasha_mobile; 
                 $message = $aasha_message_1;
-                break;
+                $template_id=$AdminReminderTempId;
+            break;
             case 'anm':
                 $mobile =$anm_mobile; 
                 $message = $anm_message_1;
+                $template_id=$AdminReminderTempId;
                 break;
             default:
             break;
@@ -194,14 +206,17 @@ switch ($type){
             case 'patient':
                 $mobile =$patient_mobile; 
                 $message = $patient_message_2;
+                $template_id=$CheckupReminderTempId;
                 break;
             case 'aasha':
                 $mobile =$aasha_mobile; 
                 $message = $aasha_message_2;
+                $template_id=$AdminReminderTempId;
                 break;
             case 'anm':
                 $mobile =$anm_mobile; 
                 $message = $anm_message_2;
+                $template_id=$AdminReminderTempId;
                 break;
             default:
             break;
@@ -212,14 +227,17 @@ switch ($type){
             case 'patient':
                 $mobile =$patient_mobile; 
                 $message = $patient_message_3;
+                $template_id=$CheckupReminderTempId;
                 break;
             case 'aasha':
                 $mobile =$aasha_mobile; 
                 $message = $aasha_message_3;
+                $template_id=$AdminReminderTempId;
                 break;
             case 'anm':
                 $mobile =$anm_mobile; 
                 $message = $anm_message_3;
+                $template_id=$AdminReminderTempId;
                 break;
             default:
             break;
@@ -230,14 +248,17 @@ switch ($type){
             case 'patient':
                 $mobile =$patient_mobile; 
                 $message = $patient_message_edd_1;
+                $template_id=$DeliveryReminderTempId;
                 break;
             case 'aasha':
                 $mobile =$aasha_mobile; 
                 $message = $anm_message_edd_2;
+                $template_id=$AdminDeliveryTempId;
                 break;
             case 'anm':
                 $mobile =$anm_mobile; 
                 $message = $anm_message_edd_3;
+                $template_id=$AdminDeliveryTempId;
                 break;
             default:
             break;
@@ -247,11 +268,13 @@ switch ($type){
     break;
 }
 
-print_r($patiet_data[$i]);
-echo "<br><br>";
-echo $message;
-
-echo "<br><br>";
+sendSMS($mobile,$message,$template_id);
+// echo $mobile;echo "<br>";
+// echo $message;echo "<br>";
+//echo $template_id;echo "<br>";
+// echo "<br>";
+// echo "<br><br>";
+// echo "<br><br>";
 }
 
 ?>
