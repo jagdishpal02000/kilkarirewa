@@ -33,3 +33,5 @@ $AdminDeliveryTempId="1207165727138387049";
 
 
 $apiUrl="http://localhost/kilkarirewa/resources/functions/api.php";
+$adminApiUrl="http://localhost/kilkarirewa/resources/functions/admin-api.php";
+

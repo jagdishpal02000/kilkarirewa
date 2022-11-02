@@ -9,7 +9,11 @@ if (isset($_SESSION['login'])) {
    if ($_SESSION['type'] == 'anm') {
       header('Location:anm/panel.php');
       exit;
-   } else if ($_SESSION['type'] == 'patient') {
+   } else if ($_SESSION['type'] == 'admin') {
+      header('Location:admin/panel.php');
+      exit;
+   }
+    else if ($_SESSION['type'] == 'patient') {
       header('Location:patient/panel.php');
       exit;
    }
@@ -22,16 +26,34 @@ if (isset($_POST['login'])) {
       $login_q = "SELECT * FROM anm WHERE email='$username' ";
       $lq = mysqli_query($conn, $login_q);
       $login_data = mysqli_fetch_assoc($lq);
+      if (!$login_data) {
+         $wrong_username = true;
+      } else {
+         if ($login_data['password'] == $password) {
+               $_SESSION['login'] = '1';
+               $_SESSION['type'] = 'anm';
+               $_SESSION['anm_data'] = $login_data;
+
+               header("Location:anm/panel.php");
+         } else {
+               $wrong_password = true;
+         }
+      }
+   }
+   if ($_POST['login_type'] == 'admin') {
+      $login_q = "SELECT * FROM admin WHERE username='$username'  lIMIT 1";
+      $lq = mysqli_query($conn, $login_q);
+      $login_data = mysqli_fetch_assoc($lq);
       if (!$login_data)
          $wrong_username = true;
 
       else {
          if ($login_data['password'] == $password) {
             $_SESSION['login'] = '1';
-            $_SESSION['type'] = 'anm';
-            $_SESSION['anm_data'] = $login_data;
+            $_SESSION['type'] = 'admin';
+            $_SESSION['admin_data'] = $login_data;
 
-            header("Location:anm/panel.php");
+            header("Location:admin/panel.php");
          } else {
             $wrong_password = true;
          }
@@ -94,6 +116,7 @@ include 'resources/sections/header.php';
                   <div class="form-group">
                      <select name="login_type" id="login_type" class="form-control" required>
                         <option value="" disabled selected>यूजर का प्रकार चुने</option>
+                        <option value="admin">Admin</option>
                         <option value="patient">Patient</option>
                         <option value="anm">ANM</option>
                      </select>

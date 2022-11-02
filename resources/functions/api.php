@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['type']) || $_SESSION['type'] != 'anm') {
+if (!isset($_SESSION['type']) || ($_SESSION['type'] != 'anm' && $_SESSION['type'] != 'admin')) {
     $res =  array();
-    $res['status'] = 400;
+    $res['status'] = 400; 
     $res['error'] = "Authentication failed";
     echo json_encode($res);
     exit;
